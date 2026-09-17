@@ -1,7 +1,47 @@
 <div class="min-h-screen bg-oc-white">
   <header class="flex items-center gap-4 border-b border-oc-gray-200 bg-oc-white px-6 py-4">
     <img src="oc-logo-mark.svg" alt="OPITZ CONSULTING" class="h-10 w-10" />
-    <h1 class="oc-display text-xl">{{ appName() }}</h1>
+    <h1 class="oc-display flex-1 text-xl">{{ appName() }}</h1>
+
+    <a
+      routerLink="/community-days"
+      class="text-sm font-semibold text-oc-ink transition-colors hover:text-oc-blue"
+    >
+      Community Days
+    </a>
+
+    <a
+      routerLink="/slots"
+      class="text-sm font-semibold text-oc-ink transition-colors hover:text-oc-blue"
+    >
+      Slots
+    </a>
+
+    <a
+      [routerLink]="talksLink()"
+      class="text-sm font-semibold text-oc-ink transition-colors hover:text-oc-blue"
+    >
+      Talks
+    </a>
+
+    @if (authenticated()) {
+      <span class="text-sm text-oc-gray-600">{{ username() }}</span>
+      <button
+        type="button"
+        (click)="logout()"
+        class="rounded-md border border-oc-gray-300 px-4 py-2 text-sm font-semibold text-oc-ink transition-colors hover:bg-oc-gray-100"
+      >
+        Abmelden
+      </button>
+    } @else {
+      <button
+        type="button"
+        (click)="login()"
+        class="rounded-md bg-oc-blue px-4 py-2 text-sm font-semibold text-oc-white transition-colors hover:bg-oc-blue-700"
+      >
+        Anmelden
+      </button>
+    }
   </header>
 
   <main class="mx-auto max-w-3xl px-6 py-10">

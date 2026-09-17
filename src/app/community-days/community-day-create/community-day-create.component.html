@@ -1,0 +1,62 @@
+<div class="mx-auto max-w-2xl px-6 py-10">
+  <p class="oc-eyebrow mb-2">#COMMUNITY DAYS</p>
+  <h2 class="oc-display mb-8 text-2xl">Neuen Community Day anlegen</h2>
+
+  <form (submit)="submit($event)" class="flex flex-col gap-6">
+    <label class="flex flex-col gap-1">
+      <span class="text-sm font-semibold text-oc-ink">Name</span>
+      <input
+        type="text"
+        [formField]="communityDayForm.name"
+        class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+      />
+      @if (communityDayForm.name().touched() && !communityDayForm.name().valid()) {
+        @for (err of communityDayForm.name().errors(); track err.kind) {
+          <span class="text-sm text-oc-red">{{ err.message }}</span>
+        }
+      }
+    </label>
+
+    <label class="flex flex-col gap-1">
+      <span class="text-sm font-semibold text-oc-ink">Beschreibung</span>
+      <textarea
+        [formField]="communityDayForm.description"
+        rows="4"
+        class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+      ></textarea>
+      @if (communityDayForm.description().touched() && !communityDayForm.description().valid()) {
+        @for (err of communityDayForm.description().errors(); track err.kind) {
+          <span class="text-sm text-oc-red">{{ err.message }}</span>
+        }
+      }
+    </label>
+
+    <label class="flex flex-col gap-1">
+      <span class="text-sm font-semibold text-oc-ink">Datum</span>
+      <input
+        type="date"
+        [formField]="communityDayForm.date"
+        class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+      />
+      @if (communityDayForm.date().touched() && !communityDayForm.date().valid()) {
+        @for (err of communityDayForm.date().errors(); track err.kind) {
+          <span class="text-sm text-oc-red">{{ err.message }}</span>
+        }
+      }
+    </label>
+
+    @if (submitError(); as message) {
+      <p class="rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+        {{ message }}
+      </p>
+    }
+
+    <button
+      type="submit"
+      [disabled]="isSubmitting()"
+      class="self-start rounded-md bg-oc-blue px-4 py-2 text-sm font-semibold text-oc-white transition-colors hover:bg-oc-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      {{ isSubmitting() ? 'Wird angelegt…' : 'Community Day anlegen' }}
+    </button>
+  </form>
+</div>

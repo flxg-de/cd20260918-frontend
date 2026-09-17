@@ -1,0 +1,91 @@
+<div class="mx-auto max-w-5xl px-6 py-10">
+  <div class="mb-8 flex items-center justify-between">
+    <div>
+      <p class="oc-eyebrow mb-2">#SLOTS</p>
+      <h2 class="oc-display text-2xl">Ablaufplan</h2>
+    </div>
+    @if (isOrganizer()) {
+      <a
+        routerLink="/slots/new"
+        class="rounded-md bg-oc-blue px-4 py-2 text-sm font-semibold text-oc-white transition-colors hover:bg-oc-blue-700"
+      >
+        Neuen Slot anlegen
+      </a>
+    }
+  </div>
+
+  @if (slotsResource.isLoading()) {
+    <p class="text-sm text-oc-gray-600">Lade Slots…</p>
+  } @else if (slotsResource.error()) {
+    <p class="rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+      Slots konnten nicht geladen werden.
+    </p>
+  } @else if (sortedSlots(); as slots) {
+    @if (slots.length === 0) {
+      <p class="text-sm text-oc-gray-600">Noch keine Slots vorhanden.</p>
+    } @else {
+      <ul class="flex flex-col gap-3">
+        @for (slot of slots; track slot.id) {
+          <li class="oc-shadow-sm rounded-md border border-oc-gray-200 px-5 py-4">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-oc-ink">
+                  {{ slot.startTime }} – {{ slot.endTime }}
+                  @if (slot.locked) {
+                    <span
+                      class="ml-2 rounded-full bg-oc-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-oc-ink"
+                      >Fixer Block{{ slot.label ? ': ' + slot.label : '' }}</span
+                    >
+                  }
+                </p>
+                <p class="text-sm text-oc-gray-600">
+                  Raum: {{ slot.room }}
+                  @if (slot.swimlane) {
+                    · Swimlane: {{ slot.swimlane }}
+                  }
+                  @if (slot.location) {
+                    · {{ slot.location }}
+                  }
+                </p>
+                @if (talkTitle(slot); as title) {
+                  <p class="mt-1 text-sm font-semibold text-oc-blue">{{ title }}</p>
+                } @else {
+                  <p class="mt-1 text-sm text-oc-gray-500">Kein Talk zugeordnet</p>
+                }
+              </div>
+
+              <div class="flex shrink-0 items-center gap-3">
+                <span
+                  class="rounded-md bg-oc-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-oc-ink"
+                  >{{ slot.format }}</span
+                >
+                @if (isOrganizer()) {
+                  <a
+                    [routerLink]="['/slots', slot.id, 'edit']"
+                    class="text-sm font-semibold text-oc-ink transition-colors hover:text-oc-blue"
+                  >
+                    Bearbeiten
+                  </a>
+                  <button
+                    type="button"
+                    (click)="deleteSlot(slot)"
+                    [disabled]="deletingId() === slot.id"
+                    class="text-sm font-semibold text-oc-red transition-colors hover:text-oc-red disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Löschen
+                  </button>
+                }
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  }
+
+  @if (deleteError(); as message) {
+    <p class="mt-6 rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+      {{ message }}
+    </p>
+  }
+</div>

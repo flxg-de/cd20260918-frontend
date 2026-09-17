@@ -1,0 +1,131 @@
+<div class="mx-auto max-w-2xl px-6 py-10">
+  <p class="oc-eyebrow mb-2">#TALKS</p>
+  <h2 class="oc-display mb-8 text-2xl">Neuen Talk einreichen</h2>
+
+  @if (!canSubmitTalk() && !currentDayResource.isLoading()) {
+    <p class="mb-6 rounded-md border border-oc-gray-200 bg-oc-gray-100 px-4 py-3 text-sm text-oc-gray-600">
+      Die Einreichung neuer Talks ist aktuell nicht möglich — der Community Day befindet sich nicht
+      in der Einreichungsphase.
+    </p>
+  } @else {
+    <form (submit)="submit($event)" class="flex flex-col gap-6">
+      <label class="flex flex-col gap-1">
+        <span class="text-sm font-semibold text-oc-ink">Titel</span>
+        <input
+          type="text"
+          [formField]="talkForm.title"
+          class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+        />
+        @if (talkForm.title().touched() && !talkForm.title().valid()) {
+          @for (err of talkForm.title().errors(); track err.kind) {
+            <span class="text-sm text-oc-red">{{ err.message }}</span>
+          }
+        }
+      </label>
+
+      <div class="flex flex-col gap-2">
+        <span class="text-sm font-semibold text-oc-ink">Sprecher/innen</span>
+        @for (speaker of speakers(); track $index) {
+          <div class="flex items-center gap-2">
+            <input
+              type="text"
+              [value]="speaker"
+              (input)="updateSpeaker($index, $any($event.target).value)"
+              class="flex-1 rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+            />
+            <button
+              type="button"
+              (click)="removeSpeaker($index)"
+              class="text-sm font-semibold text-oc-red transition-colors hover:text-oc-red"
+            >
+              Entfernen
+            </button>
+          </div>
+        }
+        <button
+          type="button"
+          (click)="addSpeaker()"
+          class="self-start text-sm font-semibold text-oc-blue transition-colors hover:text-oc-blue-700"
+        >
+          + Sprecher/in hinzufügen
+        </button>
+        @if (speakersError(); as message) {
+          <span class="text-sm text-oc-red">{{ message }}</span>
+        }
+      </div>
+
+      <label class="flex flex-col gap-1">
+        <span class="text-sm font-semibold text-oc-ink">Beschreibung (optional)</span>
+        <textarea
+          [formField]="talkForm.description"
+          rows="4"
+          class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+        ></textarea>
+        @if (talkForm.description().touched() && !talkForm.description().valid()) {
+          @for (err of talkForm.description().errors(); track err.kind) {
+            <span class="text-sm text-oc-red">{{ err.message }}</span>
+          }
+        }
+      </label>
+
+      <label class="flex flex-col gap-1">
+        <span class="text-sm font-semibold text-oc-ink">Dauer (Minuten)</span>
+        <input
+          type="number"
+          [formField]="talkForm.durationMinutes"
+          class="rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+        />
+        @if (talkForm.durationMinutes().touched() && !talkForm.durationMinutes().valid()) {
+          @for (err of talkForm.durationMinutes().errors(); track err.kind) {
+            <span class="text-sm text-oc-red">{{ err.message }}</span>
+          }
+        }
+      </label>
+
+      <div class="flex flex-col gap-2">
+        <span class="text-sm font-semibold text-oc-ink">Tags (optional)</span>
+        <div class="flex flex-wrap gap-2">
+          @for (tag of tags(); track $index) {
+            <span
+              class="flex items-center gap-1 rounded-full bg-oc-gray-100 px-3 py-1 text-xs font-semibold text-oc-ink"
+            >
+              {{ tag }}
+              <button type="button" (click)="removeTag($index)" class="text-oc-red">×</button>
+            </span>
+          }
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            [value]="newTag()"
+            (input)="newTag.set($any($event.target).value)"
+            (keydown.enter)="$event.preventDefault(); addTag()"
+            placeholder="Tag eingeben und Enter drücken"
+            class="flex-1 rounded-md border border-oc-gray-300 px-3 py-2 text-sm text-oc-ink"
+          />
+          <button
+            type="button"
+            (click)="addTag()"
+            class="text-sm font-semibold text-oc-blue transition-colors hover:text-oc-blue-700"
+          >
+            Hinzufügen
+          </button>
+        </div>
+      </div>
+
+      @if (submitError(); as message) {
+        <p class="rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+          {{ message }}
+        </p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="isSubmitting()"
+        class="self-start rounded-md bg-oc-blue px-4 py-2 text-sm font-semibold text-oc-white transition-colors hover:bg-oc-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {{ isSubmitting() ? 'Wird eingereicht…' : 'Talk einreichen' }}
+      </button>
+    </form>
+  }
+</div>
