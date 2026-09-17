@@ -1,0 +1,11 @@
+additionalProperties:
+  ngVersion: "22.0.0"
+  npmName: "@communityday/api-client"
+  providedInRoot: true
+  useSingleRequestParameter: true
+  withInterfaces: true
+  supportsES6: true
+  enumPropertyNaming: original
+  fileNaming: kebab-case
+  serviceSuffix: Service
+  modelPropertyNaming: camelCase

@@ -11,6 +11,9 @@
 npm-debug.log
 yarn-error.log
 
+# Generated OpenAPI client (regenerate with `npm run generate:api`)
+/src/api
+
 # IDEs and editors
 .idea/
 .project
