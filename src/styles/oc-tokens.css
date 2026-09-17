@@ -1,0 +1,77 @@
+/* ============================================================
+   OPITZ CONSULTING — Design tokens for Tailwind v4
+   Copied/condensed from the OC Design System (tokens/colors.css,
+   typography.css, fonts.css, spacing.css, base.css) and exposed
+   as Tailwind theme variables via @theme.
+   ============================================================ */
+
+:root {
+  /* ---- Brand core ------------------------------------------------ */
+  --oc-blue: #0066e8;
+  --oc-navy: #003066;
+  --oc-red: #e82000;
+  --oc-ink: #313338;
+  --oc-white: #ffffff;
+
+  /* ---- Blue ramp -------------------------------------------------- */
+  --oc-blue-900: #002a5c;
+  --oc-blue-700: #0052ba;
+  --oc-blue-100: #e4eefc;
+  --oc-blue-50: #f3f8fe;
+
+  /* ---- Neutral ramp ------------------------------------------------ */
+  --oc-gray-600: #606060;
+  --oc-gray-300: #d8d9db;
+  --oc-gray-200: #e7e8ea;
+  --oc-gray-100: #f2f3f5;
+
+  /* ---- Radii / shadows -------------------------------------------- */
+  --oc-radius-md: 6px;
+  --oc-radius-lg: 10px;
+  --oc-shadow-sm: 0 1px 3px rgba(49, 51, 56, 0.1), 0 1px 2px rgba(49, 51, 56, 0.06);
+}
+
+@theme {
+  --font-sans: 'Open Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Open Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --color-oc-blue: var(--oc-blue);
+  --color-oc-navy: var(--oc-navy);
+  --color-oc-red: var(--oc-red);
+  --color-oc-ink: var(--oc-ink);
+  --color-oc-white: var(--oc-white);
+
+  --color-oc-blue-900: var(--oc-blue-900);
+  --color-oc-blue-700: var(--oc-blue-700);
+  --color-oc-blue-100: var(--oc-blue-100);
+  --color-oc-blue-50: var(--oc-blue-50);
+
+  --color-oc-gray-600: var(--oc-gray-600);
+  --color-oc-gray-300: var(--oc-gray-300);
+  --color-oc-gray-200: var(--oc-gray-200);
+  --color-oc-gray-100: var(--oc-gray-100);
+
+  --radius-oc-md: var(--oc-radius-md);
+  --radius-oc-lg: var(--oc-radius-lg);
+
+  --shadow-oc-sm: var(--oc-shadow-sm);
+}
+
+/* ---- Display heading convention (uppercase, ExtraBold, tight) ---- */
+.oc-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--oc-ink);
+}
+
+.oc-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oc-blue);
+}
