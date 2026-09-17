@@ -1,0 +1,3 @@
+[submodule "cd20260918-api"]
+	path = cd20260918-api
+	url = git@github.com:flxg-de/cd20260918-api.git
