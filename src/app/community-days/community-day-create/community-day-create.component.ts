@@ -47,9 +47,9 @@ export class CommunityDayCreateComponent {
 
     const { name, description, date } = this.communityDayModel();
     this.api.createCommunityDay({ communityDayCreateRequest: { name, description, date } }).subscribe({
-      next: (created) => {
+      next: () => {
         this.isSubmitting.set(false);
-        void this.router.navigate(['/community-days', created.id]);
+        void this.router.navigate(['/community-days']);
       },
       error: (error: HttpErrorResponse) => {
         this.isSubmitting.set(false);

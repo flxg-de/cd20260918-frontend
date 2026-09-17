@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/tokens/colors.css">
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/tokens/typography.css">
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/tokens/base.css">
+<link rel="stylesheet" href="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/styles.css">
+<script src="_ds/opitz-consulting-design-system-dd636815-32f2-411e-9119-b2bf5f741083/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: #f2f3f5; }
+  a { color: #0066E8; text-decoration: none; }
+  a:hover { color: #0052ba; }
+  input, textarea, select, button { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="font-family: var(--font-sans, 'Open Sans', sans-serif); color: #313338; min-height: 100vh;">
+
+  <header style="background: #ffffff; border-bottom: 1px solid #e7e8ea;">
+    <div style="max-width: 1480px; margin: 0 auto; padding: 18px 28px 0 28px; display: flex; align-items: flex-start; gap: 28px; flex-wrap: wrap;">
+      <x-import component-from-global-scope="OPITZCONSULTINGDesignSystem_dd6368.Logo" hint-size="190px,42px"></x-import>
+      <div style="flex: 1 1 260px; min-width: 0;">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0066E8;">#Community Day</div>
+        <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin-top: 2px;">{{ eventTitle }}</div>
+      </div>
+      <div style="flex: none; padding-top: 4px; text-align: right;">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #606060;">{{ phaseLabel }}</div>
+        <div style="font-size: 13px; color: #606060; margin-top: 4px;">{{ phaseDetail }}</div>
+      </div>
+    </div>
+    <div style="max-width: 1480px; margin: 0 auto; padding: 14px 28px 0 28px; display: flex; gap: 2px; flex-wrap: wrap;">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="{{ n.hover }}">{{ n.label }}</button>
+      </sc-for>
+    </div>
+  </header>
+
+  <main style="max-width: 1480px; margin: 0 auto; padding: 28px;">
+
+    <sc-if value="{{ isSubmit }}" hint-placeholder-val="{{ true }}">
+      <div style="display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, 1fr); gap: 24px; align-items: start;">
+        <section style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 28px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0066E8;">#Einreichen</div>
+          <h2 style="font-size: 26px; font-weight: 800; margin: 6px 0 6px 0; letter-spacing: -0.01em;">Vortrag vorschlagen</h2>
+          <p style="font-size: 14px; line-height: 1.55; color: #606060; margin: 0 0 24px 0; max-width: 56ch;">Ein Thema, mit dem Kolleginnen und Kollegen am Community Day weiterkommen. Nach dem Einsendeschluss ordnet die Orga alle Einreichungen in die Swimlanes ein; Nachreichen bleibt bis zur Programmveröffentlichung möglich.</p>
+
+          <div style="display: grid; gap: 20px;">
+            <label style="display: grid; gap: 6px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Titel</span>
+              <input value="{{ form.title }}" onChange="{{ onTitle }}" placeholder="z. B. Terraform-Module, die man gern erbt" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 11px 13px; font-size: 15px; color: #313338; background: #fff;" style-focus="{{ focusStyle }}">
+            </label>
+
+            <label style="display: grid; gap: 6px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Kurzbeschreibung</span>
+              <textarea value="{{ form.abstract }}" onChange="{{ onAbstract }}" rows="4" placeholder="Worum geht es, und was nehmen die Teilnehmenden mit?" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 11px 13px; font-size: 15px; line-height: 1.5; color: #313338; resize: vertical; background: #fff;" style-focus="{{ focusStyle }}"></textarea>
+              <span style="font-size: 12px; color: #8a8c90;">{{ abstractCount }}</span>
+            </label>
+
+            <label style="display: grid; gap: 6px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Vortragende</span>
+              <input value="{{ form.speakers }}" onChange="{{ onSpeakers }}" placeholder="Mehrere Namen mit Komma trennen" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 11px 13px; font-size: 15px; color: #313338; background: #fff;" style-focus="{{ focusStyle }}">
+            </label>
+
+            <div style="display: grid; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Dauer</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <sc-for list="{{ durationChips }}" as="d" hint-placeholder-count="2">
+                  <button onClick="{{ d.onClick }}" style="{{ d.style }}">{{ d.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display: grid; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Wie wird der Vortrag gehalten?</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <sc-for list="{{ modeChips }}" as="m" hint-placeholder-count="3">
+                  <button onClick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</button>
+                </sc-for>
+              </div>
+              <span style="font-size: 12px; color: #8a8c90; line-height: 1.45;">{{ modeHint }}</span>
+            </div>
+
+            <sc-if value="{{ needsStandort }}" hint-placeholder-val="{{ true }}">
+              <div style="display: grid; gap: 8px;">
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Standort</span>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <sc-for list="{{ standortChips }}" as="s" hint-placeholder-count="4">
+                    <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="display: grid; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Themen</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <sc-for list="{{ tagChips }}" as="t" hint-placeholder-count="7">
+                  <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid #e7e8ea; padding-top: 20px;">
+              <button onClick="{{ submit }}" style="border: none; border-radius: 6px; padding: 13px 26px; font-size: 15px; font-weight: 800; cursor: pointer; color: #fff; background: #0066E8;" style-hover="{{ primaryHover }}">Einreichen</button>
+              <span style="{{ noteStyle }}">{{ noteText }}</span>
+            </div>
+          </div>
+        </section>
+
+        <aside style="display: grid; gap: 16px;">
+          <div style="background: #003066; color: #fff; border-radius: 6px; padding: 24px;">
+            <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #93bef7;">#Ablauf</div>
+            <div style="display: grid; gap: 15px; margin-top: 18px;">
+              <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="4">
+                <div style="display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; align-items: baseline;">
+                  <span style="font-size: 13px; font-weight: 800; color: #93bef7;">{{ t.date }}</span>
+                  <span style="font-size: 14px; line-height: 1.45;">{{ t.text }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 24px;">
+            <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0066E8;">#Deine Einreichungen</div>
+            <div style="display: grid; gap: 14px; margin-top: 16px;">
+              <sc-for list="{{ myTalks }}" as="m" hint-placeholder-count="2">
+                <div style="border-left: 3px solid #0066E8; padding: 2px 0 2px 12px;">
+                  <div style="font-size: 14px; font-weight: 700; line-height: 1.35;">{{ m.title }}</div>
+                  <div style="font-size: 12px; color: #606060; margin-top: 4px; font-weight: 600;">{{ m.status }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+      <section>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 26px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 20px 22px;">
+              <div style="font-size: 38px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: #0066E8;">{{ s.value }}</div>
+              <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #606060; margin-top: 8px;">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+              <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+          <button onClick="{{ toggleSort }}" style="background: transparent; border: 1.5px solid #0066E8; color: #0066E8; border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" style-hover="{{ outlineHover }}">{{ sortLabel }}</button>
+        </div>
+
+        <div style="display: grid; gap: 10px;">
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+            <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 18px 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center;">
+              <div style="min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">{{ r.title }}</span>
+                  <span style="{{ r.statusStyle }}">{{ r.status }}</span>
+                  <span style="{{ r.modeStyle }}">{{ r.modeLabel }}</span>
+                </div>
+                <div style="font-size: 14px; line-height: 1.5; color: #606060; margin-top: 7px; max-width: 80ch;">{{ r.abstract }}</div>
+                <div style="font-size: 12px; color: #8a8c90; margin-top: 9px; font-weight: 600;">{{ r.meta }}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; flex: none;">
+                <button onClick="{{ r.onVote }}" style="{{ r.voteStyle }}">{{ r.voteLabel }}</button>
+                <button onClick="{{ r.onPlan }}" style="background: transparent; border: 1.5px solid #d8d9db; color: #313338; border-radius: 6px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" style-hover="{{ ghostHover }}">Einplanen</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isBoard }}" hint-placeholder-val="{{ false }}">
+      <section style="display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 20px; align-items: start;">
+        <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 18px; position: sticky; top: 20px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0066E8;">#Nicht eingeplant</div>
+          <div style="font-size: 12px; color: #606060; margin-top: 7px; line-height: 1.5;">Karte ziehen oder anklicken, dann ein freies Feld im Raster wählen.</div>
+          <div onDragOver="{{ onPoolOver }}" onDrop="{{ onPoolDrop }}" style="display: grid; gap: 10px; margin-top: 16px; min-height: 120px;">
+            <sc-for list="{{ pool }}" as="p" hint-placeholder-count="5">
+              <div draggable="true" onDragStart="{{ p.onDragStart }}" onClick="{{ p.onClick }}" style="{{ p.style }}">
+                <div style="font-size: 13px; font-weight: 700; line-height: 1.35;">{{ p.title }}</div>
+                <div style="font-size: 11px; margin-top: 6px; font-weight: 600; color: #606060;">{{ p.meta }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ poolEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size: 13px; color: #8a8c90; border: 1px dashed #d8d9db; border-radius: 6px; padding: 18px; text-align: center;">Alles eingeplant.</div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 18px; overflow-x: auto;">
+          <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+            <div>
+              <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0066E8;">#Swimlanes</div>
+              <div style="font-size: 20px; font-weight: 800; margin-top: 3px;">Planungsboard</div>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; color: #606060;">{{ boardStatus }}</div>
+          </div>
+
+          <div style="display: grid; gap: 8px; min-width: 900px;">
+            <div style="{{ rowStyle }}">
+              <div></div>
+              <sc-for list="{{ rooms }}" as="room" hint-placeholder-count="5">
+                <div style="{{ room.style }}">
+                  <div style="font-size: 13px; font-weight: 800; letter-spacing: 0.01em;">{{ room.name }}</div>
+                  <div style="font-size: 11px; margin-top: 3px; opacity: 0.85;">{{ room.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <sc-for list="{{ boardRows }}" as="br" hint-placeholder-count="8">
+              <div style="{{ br.rowStyle }}">
+                <div style="display: flex; align-items: center; font-size: 12px; font-weight: 800; color: #4a4c52;">{{ br.label }}</div>
+                <sc-if value="{{ br.isBlock }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ br.blockStyle }}">
+                    <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em;">{{ br.blockTitle }}</span>
+                    <span style="font-size: 12px; font-weight: 600; opacity: 0.9;">{{ br.blockSub }}</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ br.isOpen }}" hint-placeholder-val="{{ true }}">
+                  <sc-for list="{{ br.cells }}" as="c" hint-placeholder-count="5">
+                    <div onDragOver="{{ c.onDragOver }}" onDrop="{{ c.onDrop }}" onClick="{{ c.onClick }}" style="{{ c.style }}">
+                      <sc-if value="{{ c.filled }}" hint-placeholder-val="{{ true }}">
+                        <div draggable="true" onDragStart="{{ c.onDragStart }}">
+                          <div style="font-size: 13px; font-weight: 700; line-height: 1.3;">{{ c.title }}</div>
+                          <div style="font-size: 11px; margin-top: 6px; font-weight: 600; opacity: 0.85;">{{ c.meta }}</div>
+                          <div style="font-size: 11px; margin-top: 6px; font-weight: 700; color: #E82000;">{{ c.warning }}</div>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ c.isEmpty }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size: 12px; color: #a9abb0; font-weight: 600;">{{ c.hint }}</div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isProgram }}" hint-placeholder-val="{{ false }}">
+      <section>
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 22px;">
+          <div>
+            <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0066E8;">#Programm</div>
+            <h2 style="font-size: 28px; font-weight: 800; margin: 6px 0 0 0; letter-spacing: -0.015em;">{{ eventDate }}</h2>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <sc-for list="{{ programFilters }}" as="f" hint-placeholder-count="5">
+              <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 14px;">
+          <sc-for list="{{ program }}" as="slot" hint-placeholder-count="6">
+            <div style="{{ slot.wrapStyle }}">
+              <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 12px; flex-wrap: wrap;">
+                <span style="{{ slot.timeStyle }}">{{ slot.label }}</span>
+                <sc-if value="{{ slot.isBlockRow }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size: 18px; font-weight: 800; letter-spacing: -0.01em;">{{ slot.blockTitle }}</span>
+                </sc-if>
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75;">{{ slot.note }}</span>
+              </div>
+              <sc-if value="{{ slot.isOpen }}" hint-placeholder-val="{{ true }}">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+                  <sc-for list="{{ slot.sessions }}" as="s" hint-placeholder-count="3">
+                    <div style="{{ s.style }}">
+                      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0066E8;">{{ s.room }}</span>
+                        <span style="{{ s.modeStyle }}">{{ s.modeLabel }}</span>
+                      </div>
+                      <div style="font-size: 15px; font-weight: 700; line-height: 1.35; margin-top: 8px;">{{ s.title }}</div>
+                      <div style="font-size: 12px; color: #606060; font-weight: 600; margin-top: 6px;">{{ s.meta }}</div>
+                      <button onClick="{{ s.onFav }}" style="{{ s.favStyle }}">{{ s.favLabel }}</button>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ slot.empty }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size: 13px; color: #8a8c90; border: 1px dashed #d8d9db; border-radius: 6px; padding: 16px;">Noch nichts eingeplant.</div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isMyDay }}" hint-placeholder-val="{{ false }}">
+      <section style="max-width: 860px;">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0066E8;">#Mein Tag</div>
+        <h2 style="font-size: 28px; font-weight: 800; margin: 6px 0 4px 0; letter-spacing: -0.015em;">{{ myDayTitle }}</h2>
+        <p style="font-size: 14px; color: #606060; margin: 0 0 24px 0;">{{ myDayNote }}</p>
+        <div style="display: grid; gap: 10px;">
+          <sc-for list="{{ myDay }}" as="d" hint-placeholder-count="5">
+            <div style="{{ d.style }}">
+              <div style="font-size: 18px; font-weight: 800; color: #0066E8; min-width: 62px;">{{ d.time }}</div>
+              <div style="min-width: 0; flex: 1;">
+                <div style="font-size: 15px; font-weight: 700; line-height: 1.35;">{{ d.title }}</div>
+                <div style="font-size: 12px; color: #606060; font-weight: 600; margin-top: 5px;">{{ d.meta }}</div>
+              </div>
+              <button onClick="{{ d.onRemove }}" style="{{ d.removeStyle }}">{{ d.removeLabel }}</button>
+            </div>
+          </sc-for>
+          <sc-if value="{{ myDayEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size: 14px; color: #8a8c90; border: 1px dashed #d8d9db; border-radius: 6px; padding: 24px; background: #fff;">Noch keine Favoriten. Im Programm auf „Merken“ tippen.</div>
+          </sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+      <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 20px; align-items: start;">
+        <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 24px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0066E8;">#Event</div>
+          <div style="display: grid; gap: 16px; margin-top: 18px;">
+            <label style="display: grid; gap: 6px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Titel</span>
+              <input value="{{ eventTitle }}" onChange="{{ onEventTitle }}" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 10px 12px; font-size: 14px; background: #fff; color: #313338;" style-focus="{{ focusStyle }}">
+            </label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px;">
+              <label style="display: grid; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Event-Tag</span>
+                <input value="{{ eventDate }}" onChange="{{ onEventDate }}" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 10px 12px; font-size: 14px; background: #fff; color: #313338;" style-focus="{{ focusStyle }}">
+              </label>
+              <label style="display: grid; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Einsendeschluss</span>
+                <input value="{{ deadline }}" onChange="{{ onDeadline }}" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 10px 12px; font-size: 14px; background: #fff; color: #313338;" style-focus="{{ focusStyle }}">
+              </label>
+              <label style="display: grid; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Nachreichen bis</span>
+                <input value="{{ lateDeadline }}" onChange="{{ onLateDeadline }}" style="border: 1px solid #d8d9db; border-radius: 6px; padding: 10px 12px; font-size: 14px; background: #fff; color: #313338;" style-focus="{{ focusStyle }}">
+              </label>
+            </div>
+            <div style="display: grid; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4c52;">Phase</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <sc-for list="{{ phaseChips }}" as="p" hint-placeholder-count="3">
+                  <button onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 24px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0066E8;">#Swimlanes &amp; Standorte</div>
+          <div style="display: grid; gap: 10px; margin-top: 18px;">
+            <sc-for list="{{ adminRooms }}" as="r" hint-placeholder-count="5">
+              <div style="display: flex; align-items: center; gap: 12px; border: 1px solid #e7e8ea; border-radius: 6px; padding: 12px 14px;">
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 14px; font-weight: 700;">{{ r.name }}</div>
+                  <div style="font-size: 12px; color: #606060; font-weight: 600; margin-top: 3px;">{{ r.sub }}</div>
+                </div>
+                <button onClick="{{ r.onRemove }}" style="background: transparent; border: none; color: #8a8c90; font-size: 12px; font-weight: 700; cursor: pointer; padding: 6px;" style-hover="{{ removeHover }}">Entfernen</button>
+              </div>
+            </sc-for>
+            <div style="display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+              <input value="{{ newRoom }}" onChange="{{ onNewRoom }}" placeholder="Neue Swimlane, z. B. Raum Essen" style="flex: 1; min-width: 160px; border: 1px solid #d8d9db; border-radius: 6px; padding: 10px 12px; font-size: 14px; background: #fff; color: #313338;" style-focus="{{ focusStyle }}">
+              <button onClick="{{ addRoom }}" style="border: none; border-radius: 6px; padding: 10px 18px; font-size: 13px; font-weight: 800; color: #fff; background: #0066E8; cursor: pointer;" style-hover="{{ primaryHover }}">Hinzufügen</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e7e8ea; border-radius: 6px; padding: 24px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0066E8;">#Zeitraster</div>
+          <div style="font-size: 12px; color: #606060; margin-top: 7px; line-height: 1.5;">Blockslots sind für Vorträge gesperrt: regionales Frühstück, Mittagessen und der Slot der Geschäftsführung.</div>
+          <div style="display: grid; gap: 8px; margin-top: 16px;">
+            <sc-for list="{{ adminSlots }}" as="s" hint-placeholder-count="9">
+              <div style="display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #f2f3f5; padding: 10px 2px;">
+                <span style="font-size: 14px; font-weight: 800; min-width: 52px;">{{ s.label }}</span>
+                <span style="font-size: 13px; color: #606060; flex: 1; min-width: 0;">{{ s.desc }}</span>
+                <button onClick="{{ s.onToggle }}" style="{{ s.toggleStyle }}">{{ s.toggleLabel }}</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <footer style="max-width: 1480px; margin: 0 auto; padding: 4px 28px 40px 28px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 11px; color: #8a8c90; font-weight: 600;">
+    <span>© OPITZ CONSULTING 2026 / Interner Gebrauch</span>
+    <span>Community Day Management</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;votingEnabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verhalten&quot;}}">
+const TAGS = ['Cloud', 'Daten & KI', 'Architektur', 'Security', 'DevOps', 'Methodik', 'Frontend'];
+const STANDORTE = ['Gummersbach', 'Hamburg', 'München', 'Berlin', 'Kraków'];
+const MODES = [
+  { id: 'praesenz', label: 'Vor Ort' },
+  { id: 'hybrid', label: 'Hybrid' },
+  { id: 'digital', label: 'Rein digital' }
+];
+
+const ROOMS0 = [
+  { id: 'gb-aula', name: 'Aula', sub: 'Gummersbach · 80 Plätze', standort: 'Gummersbach', digital: false },
+  { id: 'gb-koeln', name: 'Raum Köln', sub: 'Gummersbach · 40 Plätze', standort: 'Gummersbach', digital: false },
+  { id: 'hh-deck', name: 'Deck 4', sub: 'Hamburg · 35 Plätze', standort: 'Hamburg', digital: false },
+  { id: 'mu-isar', name: 'Isar', sub: 'München · 30 Plätze', standort: 'München', digital: false },
+  { id: 'stream', name: 'Stream A', sub: 'Digital · unbegrenzt', standort: null, digital: true }
+];
+
+const SLOTS0 = [
+  { id: 'b1', label: '08:30', kind: 'block', title: 'Regionales Frühstück', sub: 'An allen Standorten' },
+  { id: 's1', label: '09:30', kind: 'open' },
+  { id: 's2', label: '10:30', kind: 'open' },
+  { id: 's3', label: '11:30', kind: 'open' },
+  { id: 'b2', label: '12:30', kind: 'block', title: 'Mittagessen', sub: 'Regional, 60 Minuten' },
+  { id: 'b3', label: '13:30', kind: 'block', title: 'Slot der Geschäftsführung', sub: 'Alle Standorte, keine parallelen Vorträge' },
+  { id: 's4', label: '14:30', kind: 'open' },
+  { id: 's5', label: '15:30', kind: 'open' },
+  { id: 's6', label: '16:30', kind: 'open' }
+];
+
+const SEED = [
+  { id: 't1', title: 'Terraform-Module, die man gern erbt', abstract: 'Wie wir Module so schneiden, dass sie in fünf Projekten gleichzeitig funktionieren – inklusive der Fehler, die wir dabei gemacht haben.', speakers: 'Jonas Wieland', duration: '45', tags: ['Cloud', 'DevOps'], mode: 'hybrid', standort: 'Gummersbach', votes: 31, voted: false, room: 'gb-aula', slot: 's2', fav: true, mine: false, late: false },
+  { id: 't2', title: 'RAG im Kundenprojekt: was wirklich trägt', abstract: 'Von der ersten Demo zum Betrieb. Retrieval-Qualität, Kosten pro Anfrage und die Frage, wann ein klassischer Index die bessere Antwort ist.', speakers: 'Mira Kalkbrenner, Ilias Petrou', duration: '45', tags: ['Daten & KI'], mode: 'hybrid', standort: 'Gummersbach', votes: 44, voted: true, room: 'gb-aula', slot: 's1', fav: false, mine: false, late: false },
+  { id: 't3', title: 'Legacy-Monolith zerlegen, ohne den Betrieb anzuhalten', abstract: 'Strangler-Fig in einem 14 Jahre alten Java-System: Schnitte, Datenhaltung, Rollback-Strategie.', speakers: 'Tobias Renz, Anke Löw', duration: '45', tags: ['Architektur'], mode: 'praesenz', standort: 'Hamburg', votes: 27, voted: false, room: 'hh-deck', slot: 's1', fav: false, mine: false, late: false },
+  { id: 't4', title: 'Threat Modeling am eigenen Projekt', abstract: 'Angriffsflächen sammeln, bewerten, drei Maßnahmen priorisieren. Bringt euer Projekt mit.', speakers: 'Nadja Grünberg', duration: '45', tags: ['Security', 'Methodik'], mode: 'praesenz', standort: 'München', votes: 22, voted: false, room: 'mu-isar', slot: 's4', fav: false, mine: false, late: false },
+  { id: 't5', title: 'Pipelines, die morgens noch grün sind', abstract: 'Flaky Tests, Caching und ein Build, der von 22 auf 6 Minuten gefallen ist.', speakers: 'Sven Brandhorst', duration: '25', tags: ['DevOps'], mode: 'digital', standort: null, votes: 19, voted: false, room: 'stream', slot: 's2', fav: false, mine: false, late: false },
+  { id: 't6', title: 'Design Tokens zwischen Figma und Code', abstract: 'Ein Format, zwei Welten. Wie wir die Token-Pipeline gebaut haben und was sie im Alltag kostet.', speakers: 'Lea Hoffmann', duration: '25', tags: ['Frontend', 'Methodik'], mode: 'digital', standort: null, votes: 16, voted: false, room: null, slot: null, fav: false, mine: true, late: false },
+  { id: 't7', title: 'Kafka ist keine Datenbank', abstract: 'Vier Muster, die wir bei Kunden gesehen haben, und was stattdessen hilft.', speakers: 'Dennis Aydin', duration: '25', tags: ['Architektur', 'Daten & KI'], mode: 'hybrid', standort: 'Gummersbach', votes: 25, voted: false, room: null, slot: null, fav: false, mine: false, late: false },
+  { id: 't8', title: 'Schätzen, ohne sich zu verschätzen', abstract: 'Wie wir in Angeboten mit Unsicherheit umgehen – Referenzklassen statt Bauchgefühl.', speakers: 'Katrin Vosen', duration: '45', tags: ['Methodik'], mode: 'praesenz', standort: 'Berlin', votes: 14, voted: false, room: null, slot: null, fav: false, mine: false, late: false },
+  { id: 't9', title: 'Kostenkontrolle in AWS-Landing-Zones', abstract: 'Tagging-Disziplin, Budgets und der Report, den der Kunde tatsächlich liest.', speakers: 'Philipp Daus', duration: '25', tags: ['Cloud'], mode: 'hybrid', standort: 'Hamburg', votes: 21, voted: false, room: null, slot: null, fav: false, mine: false, late: false },
+  { id: 't10', title: 'Barrierefreiheit nachrüsten: ein Erfahrungsbericht', abstract: 'Was ein Audit im Bestandsprojekt gefunden hat und welche zwölf Fixes 80 Prozent gebracht haben.', speakers: 'Marek Nowak', duration: '25', tags: ['Frontend'], mode: 'digital', standort: null, votes: 18, voted: false, room: null, slot: null, fav: false, mine: false, late: true }
+];
+
+const FOCUS = { outline: 'none', borderColor: '#0066E8', boxShadow: '0 0 0 3px rgba(0,102,232,0.22)' };
+const CHIP_ON = { background: '#0066E8', color: '#fff', border: '1.5px solid #0066E8', borderRadius: '999px', padding: '7px 15px', fontSize: '13px', fontWeight: 700, cursor: 'pointer' };
+const CHIP_OFF = { background: '#fff', color: '#4a4c52', border: '1.5px solid #d8d9db', borderRadius: '999px', padding: '7px 15px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' };
+const PILL = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', borderRadius: '999px', padding: '4px 9px', whiteSpace: 'nowrap' };
+
+function modePill(mode) {
+  if (mode === 'digital') return { ...PILL, background: '#e4eefc', color: '#0052ba' };
+  if (mode === 'hybrid') return { ...PILL, background: '#f2f3f5', color: '#4a4c52' };
+  return { ...PILL, background: '#f2f3f5', color: '#4a4c52' };
+}
+function modeText(t) {
+  if (t.mode === 'digital') return 'Digital';
+  if (t.mode === 'hybrid') return 'Hybrid · ' + (t.standort || '—');
+  return 'Vor Ort · ' + (t.standort || '—');
+}
+
+class Component extends DCLogic {
+  state = {
+    view: 'board',
+    talks: SEED.map(t => ({ ...t })),
+    rooms: ROOMS0.map(r => ({ ...r })),
+    slots: SLOTS0.map(s => ({ ...s })),
+    selected: null,
+    dragId: null,
+    filter: 'Alle',
+    sort: 'votes',
+    programFilter: 'Alle',
+    note: '',
+    noteOk: true,
+    phase: 'planung',
+    eventTitle: 'Community Day #14 — Herbst 2026',
+    eventDate: 'Donnerstag, 5. November 2026',
+    deadline: '12.10.2026',
+    lateDeadline: '26.10.2026',
+    newRoom: '',
+    form: { title: '', abstract: '', speakers: '', duration: '45', mode: 'hybrid', standort: 'Gummersbach', tags: [] }
+  };
+
+  setForm(patch) { this.setState(s => ({ form: { ...s.form, ...patch }, note: '' })); }
+  patch(id, p) { this.setState(s => ({ talks: s.talks.map(t => (t.id === id ? { ...t, ...p } : t)) })); }
+
+  place(id, room, slot) {
+    this.setState(s => {
+      const occ = s.talks.find(t => t.room === room && t.slot === slot && t.id !== id);
+      return {
+        selected: null, dragId: null,
+        talks: s.talks.map(t => {
+          if (t.id === id) return { ...t, room, slot };
+          if (occ && t.id === occ.id) return { ...t, room: null, slot: null };
+          return t;
+        })
+      };
+    });
+  }
+  unplace(id) { this.patch(id, { room: null, slot: null }); this.setState({ selected: null, dragId: null }); }
+
+  submit = () => {
+    const f = this.state.form;
+    if (!f.title.trim() || !f.abstract.trim()) {
+      this.setState({ note: 'Titel und Kurzbeschreibung fehlen noch.', noteOk: false });
+      return;
+    }
+    const late = this.state.phase !== 'einreichung';
+    const talk = {
+      id: 'n' + Date.now(), title: f.title.trim(), abstract: f.abstract.trim(),
+      speakers: f.speakers.trim() || 'Ohne Angabe', duration: f.duration, tags: f.tags.slice(),
+      mode: f.mode, standort: f.mode === 'digital' ? null : f.standort,
+      votes: 0, voted: false, room: null, slot: null, fav: false, mine: true, late
+    };
+    this.setState(s => ({
+      talks: [...s.talks, talk],
+      note: late ? 'Nachgereicht. Die Orga prüft bis ' + s.lateDeadline + '.' : 'Eingereicht. Sichtung nach dem ' + s.deadline + '.',
+      noteOk: true,
+      form: { title: '', abstract: '', speakers: '', duration: '45', mode: f.mode, standort: f.standort, tags: [] }
+    }));
+  };
+
+  addRoom = () => {
+    const name = this.state.newRoom.trim();
+    if (!name) return;
+    this.setState(s => ({
+      rooms: [...s.rooms, { id: 'r' + Date.now(), name, sub: 'Neu · Kapazität offen', standort: null, digital: false }],
+      newRoom: ''
+    }));
+  };
+
+  renderVals() {
+    const S = this.state;
+    const rooms = S.rooms, slots = S.slots, talks = S.talks;
+    const placed = talks.filter(t => t.room && t.slot);
+    const pool = talks.filter(t => !t.room || !t.slot);
+    const openSlots = slots.filter(s => s.kind === 'open');
+    const capacity = openSlots.length * rooms.length;
+    const rowStyle = { display: 'grid', gap: '8px', gridTemplateColumns: `56px repeat(${rooms.length}, minmax(160px, 1fr))` };
+
+    const nav = [
+      { k: 'einreichen', l: 'Einreichen' }, { k: 'liste', l: 'Einreichungen' },
+      { k: 'board', l: 'Planung' }, { k: 'programm', l: 'Programm' },
+      { k: 'meintag', l: 'Mein Tag' }, { k: 'admin', l: 'Admin' }
+    ].map(n => ({
+      label: n.l,
+      onClick: () => this.setState({ view: n.k }),
+      style: {
+        background: 'transparent', border: 'none', cursor: 'pointer', padding: '10px 16px 12px 16px',
+        fontSize: '14px', fontWeight: 700,
+        borderBottom: '3px solid ' + (S.view === n.k ? '#0066E8' : 'transparent'),
+        color: S.view === n.k ? '#313338' : '#606060'
+      },
+      hover: S.view === n.k ? null : { color: '#313338' }
+    }));
+
+    const PHASES = {
+      einreichung: { label: 'Phase: Einreichung offen', detail: 'Einsendeschluss ' + S.deadline },
+      planung: { label: 'Phase: Planung', detail: 'Nachreichen bis ' + S.lateDeadline + ' möglich' },
+      event: { label: 'Phase: Programm veröffentlicht', detail: S.eventDate }
+    };
+
+    const chip = on => (on ? CHIP_ON : CHIP_OFF);
+
+    const statusOf = t => {
+      if (t.room && t.slot) return { text: 'Eingeplant', style: { ...PILL, background: '#e4eefc', color: '#0052ba' } };
+      if (t.late) return { text: 'Nachgereicht', style: { ...PILL, background: '#fdf0ed', color: '#c41b00' } };
+      return { text: 'In Sichtung', style: { ...PILL, background: '#f2f3f5', color: '#4a4c52' } };
+    };
+
+    const filters = ['Alle', 'Nicht eingeplant', 'Eingeplant', 'Digital', 'Nachgereicht'].map(f => ({
+      label: f, style: chip(S.filter === f), onClick: () => this.setState({ filter: f })
+    }));
+
+    let rows = talks.slice();
+    if (S.filter === 'Nicht eingeplant') rows = rows.filter(t => !t.room);
+    if (S.filter === 'Eingeplant') rows = rows.filter(t => t.room);
+    if (S.filter === 'Digital') rows = rows.filter(t => t.mode === 'digital' || t.mode === 'hybrid');
+    if (S.filter === 'Nachgereicht') rows = rows.filter(t => t.late);
+    rows = rows.sort((a, b) => (S.sort === 'votes' ? b.votes - a.votes : a.title.localeCompare(b.title)));
+
+    const listRows = rows.map(t => {
+      const st = statusOf(t);
+      return {
+        title: t.title, abstract: t.abstract, status: st.text, statusStyle: st.style,
+        modeLabel: modeText(t), modeStyle: modePill(t.mode),
+        meta: t.speakers + ' · ' + t.duration + ' Min · ' + (t.tags.join(', ') || 'ohne Thema'),
+        voteLabel: t.voted ? '★ ' + t.votes : '☆ ' + t.votes,
+        voteStyle: {
+          borderRadius: '6px', padding: '10px 14px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', minWidth: '84px',
+          border: '1.5px solid ' + (t.voted ? '#0066E8' : '#d8d9db'),
+          background: t.voted ? '#0066E8' : '#fff', color: t.voted ? '#fff' : '#4a4c52'
+        },
+        onVote: () => this.patch(t.id, { voted: !t.voted, votes: t.votes + (t.voted ? -1 : 1) }),
+        onPlan: () => this.setState({ view: 'board', selected: t.id })
+      };
+    });
+
+    const poolCards = pool.map(t => ({
+      title: t.title,
+      meta: t.duration + ' Min · ' + modeText(t) + ' · ' + t.votes + ' Stimmen',
+      onDragStart: () => this.setState({ dragId: t.id }),
+      onClick: () => this.setState({ selected: S.selected === t.id ? null : t.id }),
+      style: {
+        borderRadius: '6px', padding: '12px', cursor: 'grab',
+        border: '1.5px solid ' + (S.selected === t.id ? '#0066E8' : '#e7e8ea'),
+        background: S.selected === t.id ? '#e4eefc' : '#f8f9fa'
+      }
+    }));
+
+    const boardRows = slots.map(sl => {
+      if (sl.kind === 'block') {
+        return {
+          label: sl.label, isBlock: true, isOpen: false, cells: [],
+          rowStyle, blockTitle: sl.title, blockSub: sl.sub,
+          blockStyle: {
+            gridColumn: '2 / -1', background: '#003066', color: '#fff', borderRadius: '6px',
+            padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap'
+          }
+        };
+      }
+      return {
+        label: sl.label, isBlock: false, isOpen: true, rowStyle,
+        blockTitle: '', blockSub: '', blockStyle: null,
+        cells: rooms.map(room => {
+          const t = placed.find(x => x.room === room.id && x.slot === sl.id);
+          const target = S.selected && !t;
+          const mismatch = t && ((t.mode === 'digital' && !room.digital) || (t.mode !== 'digital' && room.digital) || (t.mode === 'praesenz' && room.standort && t.standort && room.standort !== t.standort));
+          return {
+            filled: !!t, isEmpty: !t,
+            title: t ? t.title : '',
+            meta: t ? t.speakers + ' · ' + t.duration + ' Min' : '',
+            warning: mismatch ? 'Modus/Standort prüfen' : '',
+            hint: target ? 'Hier ablegen' : '',
+            onDragOver: e => e.preventDefault(),
+            onDrop: e => { e.preventDefault(); if (S.dragId) this.place(S.dragId, room.id, sl.id); },
+            onDragStart: () => { if (t) this.setState({ dragId: t.id }); },
+            onClick: () => {
+              if (S.selected && !t) this.place(S.selected, room.id, sl.id);
+              else if (t) this.unplace(t.id);
+            },
+            style: t
+              ? {
+                  borderRadius: '6px', padding: '11px', minHeight: '86px', cursor: 'grab',
+                  border: '1px solid ' + (mismatch ? '#E82000' : '#c5dcfb'), background: '#e4eefc', color: '#313338'
+                }
+              : {
+                  borderRadius: '6px', padding: '11px', minHeight: '86px', cursor: 'pointer',
+                  border: '1px dashed ' + (target ? '#0066E8' : '#d8d9db'),
+                  background: target ? '#f3f8fe' : '#f8f9fa'
+                }
+          };
+        })
+      };
+    });
+
+    const programFilters = ['Alle', 'Gummersbach', 'Hamburg', 'München', 'Digital'].map(f => ({
+      label: f, style: chip(S.programFilter === f), onClick: () => this.setState({ programFilter: f })
+    }));
+
+    const roomVisible = room => {
+      if (S.programFilter === 'Alle') return true;
+      if (S.programFilter === 'Digital') return room.digital;
+      return room.standort === S.programFilter;
+    };
+
+    const program = slots.map(sl => {
+      if (sl.kind === 'block') {
+        return {
+          label: sl.label, note: sl.sub, isOpen: false, isBlockRow: true, empty: false, sessions: [],
+          wrapStyle: { background: '#003066', color: '#fff', border: '1px solid #003066', borderRadius: '6px', padding: '18px 20px' },
+          timeStyle: { fontSize: '20px', fontWeight: 800, color: '#93bef7', letterSpacing: '-0.01em' },
+          blockTitle: sl.title
+        };
+      }
+      const sessions = placed
+        .filter(t => t.slot === sl.id)
+        .map(t => ({ t, room: rooms.find(r => r.id === t.room) }))
+        .filter(x => x.room && roomVisible(x.room))
+        .map(({ t, room }) => ({
+          room: room.name + (room.standort ? ' · ' + room.standort : ''),
+          title: t.title,
+          meta: t.speakers + ' · ' + t.duration + ' Min',
+          modeLabel: modeText(t), modeStyle: modePill(t.mode),
+          favLabel: t.fav ? '✓ Gemerkt' : 'Merken',
+          onFav: () => this.patch(t.id, { fav: !t.fav }),
+          style: {
+            border: '1px solid ' + (t.fav ? '#0066E8' : '#e7e8ea'), borderRadius: '6px', padding: '14px',
+            background: t.fav ? '#f3f8fe' : '#fff'
+          },
+          favStyle: {
+            borderRadius: '6px', padding: '8px 12px', fontSize: '12px', fontWeight: 800, cursor: 'pointer',
+            justifySelf: 'start', marginTop: '10px',
+            border: '1.5px solid ' + (t.fav ? '#0066E8' : '#d8d9db'),
+            background: t.fav ? '#0066E8' : '#fff', color: t.fav ? '#fff' : '#4a4c52'
+          }
+        }));
+      return {
+        label: sl.label,
+        note: sessions.length + (sessions.length === 1 ? ' Session' : ' Sessions'),
+        isOpen: true, isBlockRow: false, empty: sessions.length === 0, sessions,
+        wrapStyle: { background: '#fff', border: '1px solid #e7e8ea', borderRadius: '6px', padding: '18px 20px' },
+        timeStyle: { fontSize: '20px', fontWeight: 800, color: '#0066E8', letterSpacing: '-0.01em' },
+        blockTitle: ''
+      };
+    });
+
+    const favs = placed.filter(t => t.fav);
+    const myDayItems = slots.flatMap(sl => {
+      if (sl.kind === 'block') {
+        return [{
+          time: sl.label, title: sl.title, meta: sl.sub, removeLabel: 'Fest', onRemove: () => {},
+          style: { display: 'flex', alignItems: 'center', gap: '16px', background: '#003066', color: '#fff', border: '1px solid #003066', borderRadius: '6px', padding: '16px 18px' },
+          removeStyle: { background: 'transparent', border: '1.5px solid #93bef7', color: '#93bef7', borderRadius: '6px', padding: '8px 12px', fontSize: '12px', fontWeight: 700, cursor: 'default' }
+        }];
+      }
+      return favs.filter(t => t.slot === sl.id).map(t => {
+        const room = rooms.find(r => r.id === t.room);
+        return {
+          time: sl.label, title: t.title,
+          meta: (room ? room.name + (room.standort ? ' · ' + room.standort : ' · Digital') : '') + ' · ' + t.speakers,
+          removeLabel: 'Entfernen', onRemove: () => this.patch(t.id, { fav: false }),
+          style: { display: 'flex', alignItems: 'center', gap: '16px', background: '#fff', border: '1px solid #e7e8ea', borderRadius: '6px', padding: '16px 18px' },
+          removeStyle: { background: 'transparent', border: '1.5px solid #d8d9db', color: '#606060', borderRadius: '6px', padding: '8px 12px', fontSize: '12px', fontWeight: 700, cursor: 'pointer' }
+        };
+      });
+    });
+
+    const adminRooms = rooms.map(r => ({
+      name: r.name, sub: r.digital ? 'Digital' : (r.sub || ''),
+      onRemove: () => this.setState(s => ({
+        rooms: s.rooms.filter(x => x.id !== r.id),
+        talks: s.talks.map(t => (t.room === r.id ? { ...t, room: null, slot: null } : t))
+      }))
+    }));
+
+    const adminSlots = slots.map(sl => ({
+      label: sl.label,
+      desc: sl.kind === 'block' ? sl.title + ' · ' + sl.sub : 'Vorträge in allen Swimlanes',
+      toggleLabel: sl.kind === 'block' ? 'Gesperrt' : 'Offen',
+      toggleStyle: {
+        borderRadius: '999px', padding: '6px 13px', fontSize: '12px', fontWeight: 700, cursor: 'pointer',
+        border: '1.5px solid ' + (sl.kind === 'block' ? '#003066' : '#d8d9db'),
+        background: sl.kind === 'block' ? '#003066' : '#fff',
+        color: sl.kind === 'block' ? '#fff' : '#4a4c52'
+      },
+      onToggle: () => this.setState(s => ({
+        slots: s.slots.map(x => (x.id !== sl.id ? x : x.kind === 'block'
+          ? { ...x, kind: 'open' }
+          : { ...x, kind: 'block', title: x.title || 'Gesperrt', sub: x.sub || 'Kein Vortragsslot' })),
+        talks: sl.kind === 'open' ? s.talks.map(t => (t.slot === sl.id ? { ...t, room: null, slot: null } : t)) : s.talks
+      }))
+    }));
+
+    return {
+      eventTitle: S.eventTitle, eventDate: S.eventDate, deadline: S.deadline, lateDeadline: S.lateDeadline,
+      phaseLabel: PHASES[S.phase].label, phaseDetail: PHASES[S.phase].detail,
+      nav, focusStyle: FOCUS,
+      primaryHover: { background: '#0052ba' },
+      outlineHover: { background: '#e4eefc' },
+      ghostHover: { background: '#f2f3f5' },
+      removeHover: { color: '#E82000' },
+
+      isSubmit: S.view === 'einreichen', isList: S.view === 'liste', isBoard: S.view === 'board',
+      isProgram: S.view === 'programm', isMyDay: S.view === 'meintag', isAdmin: S.view === 'admin',
+
+      form: S.form,
+      abstractCount: S.form.abstract.length + ' Zeichen · zwei bis vier Sätze reichen',
+      onTitle: e => this.setForm({ title: e.target.value }),
+      onAbstract: e => this.setForm({ abstract: e.target.value }),
+      onSpeakers: e => this.setForm({ speakers: e.target.value }),
+      durationChips: ['25', '45'].map(d => ({
+        label: d + ' Minuten', style: chip(S.form.duration === d), onClick: () => this.setForm({ duration: d })
+      })),
+      modeChips: MODES.map(m => ({
+        label: m.label, style: chip(S.form.mode === m.id), onClick: () => this.setForm({ mode: m.id })
+      })),
+      modeHint: S.form.mode === 'digital'
+        ? 'Läuft im digitalen Stream, ohne Raum an einem Standort.'
+        : S.form.mode === 'hybrid'
+          ? 'Raum am Standort plus Übertragung für alle anderen Standorte.'
+          : 'Nur vor Ort, ohne Übertragung.',
+      needsStandort: S.form.mode !== 'digital',
+      standortChips: STANDORTE.map(st => ({
+        label: st, style: chip(S.form.standort === st), onClick: () => this.setForm({ standort: st })
+      })),
+      tagChips: TAGS.map(tag => ({
+        label: tag, style: chip(S.form.tags.indexOf(tag) >= 0),
+        onClick: () => this.setForm({
+          tags: S.form.tags.indexOf(tag) >= 0 ? S.form.tags.filter(x => x !== tag) : [...S.form.tags, tag]
+        })
+      })),
+      submit: this.submit,
+      noteText: S.note,
+      noteStyle: { fontSize: '13px', fontWeight: 700, color: S.noteOk ? '#1f8a4c' : '#E82000' },
+      timeline: [
+        { date: 'bis ' + S.deadline, text: 'Einreichungsfenster für alle Mitarbeitenden' },
+        { date: 'ab 13.10.', text: 'Orga sortiert die Einreichungen in die Swimlanes' },
+        { date: 'bis ' + S.lateDeadline, text: 'Nachreichen möglich, wenn noch Felder frei sind' },
+        { date: '5.11.', text: 'Community Day an allen Standorten und im Stream' }
+      ],
+      myTalks: talks.filter(t => t.mine).map(t => ({
+        title: t.title,
+        status: statusOf(t).text + ' · ' + t.votes + ' Stimmen'
+      })),
+
+      stats: [
+        { value: String(talks.length), label: 'Einreichungen' },
+        { value: String(placed.length) + '/' + capacity, label: 'Felder belegt' },
+        { value: String(talks.reduce((a, t) => a + t.votes, 0)), label: 'Interessestimmen' },
+        { value: String(talks.filter(t => t.mode !== 'praesenz').length), label: 'Digital erreichbar' }
+      ],
+      filters, rows: listRows, votingOn: true,
+      sortLabel: S.sort === 'votes' ? 'Sortierung: Stimmen' : 'Sortierung: Titel',
+      toggleSort: () => this.setState(s => ({ sort: s.sort === 'votes' ? 'titel' : 'votes' })),
+
+      pool: poolCards, poolEmpty: pool.length === 0,
+      rooms: rooms.map(r => ({
+        name: r.name, sub: r.digital ? 'Digital · unbegrenzt' : r.sub,
+        style: {
+          padding: '9px 12px', borderRadius: '6px',
+          background: r.digital ? '#0066E8' : '#003066', color: '#fff'
+        }
+      })),
+      rowStyle, boardRows,
+      boardStatus: S.selected
+        ? 'Ziel für „' + (talks.find(t => t.id === S.selected) || {}).title + '“ wählen'
+        : placed.length + ' von ' + capacity + ' Feldern belegt · ' + pool.length + ' offen',
+
+      programFilters, program,
+      myDayTitle: S.eventDate,
+      myDayNote: favs.length + ' gemerkte Sessions. Regionale Slots sind für alle gesetzt.',
+      myDay: myDayItems, myDayEmpty: favs.length === 0,
+
+      onEventTitle: e => this.setState({ eventTitle: e.target.value }),
+      onEventDate: e => this.setState({ eventDate: e.target.value }),
+      onDeadline: e => this.setState({ deadline: e.target.value }),
+      onLateDeadline: e => this.setState({ lateDeadline: e.target.value }),
+      phaseChips: [
+        { id: 'einreichung', l: 'Einreichung' }, { id: 'planung', l: 'Planung' }, { id: 'event', l: 'Veröffentlicht' }
+      ].map(p => ({ label: p.l, style: chip(S.phase === p.id), onClick: () => this.setState({ phase: p.id }) })),
+      adminRooms, adminSlots,
+      newRoom: S.newRoom,
+      onNewRoom: e => this.setState({ newRoom: e.target.value }),
+      addRoom: this.addRoom,
+      onPoolOver: e => e.preventDefault(),
+      onPoolDrop: e => { e.preventDefault(); if (S.dragId) this.unplace(S.dragId); }
+    };
+  }
+}
+</script>
+</body>
+</html>

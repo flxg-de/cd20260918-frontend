@@ -1,0 +1,54 @@
+<p class="oc-eyebrow mb-2">#MEINTAG</p>
+
+@if (isLoading()) {
+  <p>Lade Mein Tag...</p>
+} @else if (hasError()) {
+  <p class="text-oc-red">Mein Tag konnte nicht geladen werden.</p>
+} @else {
+  @if (actionError(); as message) {
+    <p class="mb-4 text-sm font-semibold text-oc-red">{{ message }}</p>
+  }
+
+  @if (unassignedFavorites().length > 0) {
+    <app-card class="mb-5 p-4">
+      <div class="oc-eyebrow mb-2">#Noch nicht eingeplant</div>
+      <ul class="grid gap-1.5 text-sm text-oc-gray-600">
+        @for (talk of unassignedFavorites(); track talk.id) {
+          <li>{{ talk.title }}</li>
+        }
+      </ul>
+    </app-card>
+  }
+
+  @if (favorites().length === 0) {
+    <app-card class="max-w-[860px] p-6">
+      <p class="text-sm text-oc-gray-600">
+        Noch keine Favoriten. Im <a routerLink="/program" class="font-semibold text-oc-blue">Programm</a>
+        auf „Merken" tippen.
+      </p>
+    </app-card>
+  } @else {
+    <div class="grid max-w-[860px] gap-2.5">
+      @for (entry of entries(); track entry.id) {
+        @if (entry.locked) {
+          <div class="flex items-center gap-4 rounded-md bg-oc-navy px-[18px] py-4 text-oc-white">
+            <div class="min-w-[62px] text-lg font-extrabold text-oc-blue-300">{{ entry.time }}</div>
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-bold leading-snug">{{ entry.title }}</div>
+            </div>
+            <span class="rounded-md border border-oc-blue-300 px-3 py-2 text-xs font-bold text-oc-blue-300">Fest</span>
+          </div>
+        } @else {
+          <div class="flex items-center gap-4 rounded-md border border-oc-gray-200 bg-oc-white px-[18px] py-4">
+            <div class="min-w-[62px] text-lg font-extrabold text-oc-blue">{{ entry.time }}</div>
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-bold leading-snug">{{ entry.title }}</div>
+              <div class="mt-1.5 text-xs font-semibold text-oc-gray-600">{{ entry.meta }}</div>
+            </div>
+            <app-button variant="outline" (click)="removeFavorite(entry.talkId!)">Entfernen</app-button>
+          </div>
+        }
+      }
+    </div>
+  }
+}

@@ -1,0 +1,50 @@
+/* ============================================================
+   OPITZ CONSULTING — Spacing, radius, shadow, layout tokens
+   The brand reads geometric and clean: modest radii, flat
+   surfaces, hairline dividers, restrained shadows.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base) --------------------------------- */
+  --space-0:  0;
+  --space-1:  0.25rem;   /* 4  */
+  --space-2:  0.5rem;    /* 8  */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+
+  /* ---- Radii ---------------------------------------------------- */
+  --radius-none: 0;
+  --radius-sm:   3px;    /* inputs, tags                            */
+  --radius-md:   6px;    /* buttons, cards                          */
+  --radius-lg:   10px;   /* large cards / panels                    */
+  --radius-xl:   16px;
+  --radius-pill: 999px;  /* chips, stat bubbles                     */
+
+  /* ---- Borders -------------------------------------------------- */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* ---- Shadows (soft, cool-neutral) ----------------------------- */
+  --shadow-xs: 0 1px 2px rgba(49, 51, 56, 0.06);
+  --shadow-sm: 0 1px 3px rgba(49, 51, 56, 0.10), 0 1px 2px rgba(49, 51, 56, 0.06);
+  --shadow-md: 0 4px 12px rgba(49, 51, 56, 0.10);
+  --shadow-lg: 0 10px 28px rgba(49, 51, 56, 0.14);
+  --shadow-focus: var(--focus-ring);
+
+  /* ---- Motion --------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --dur-fast:   120ms; /* @kind other */
+  --dur-base:   200ms; /* @kind other */
+  --dur-slow:   320ms; /* @kind other */
+
+  /* ---- Layout --------------------------------------------------- */
+  --container-max: 1200px;
+  --slide-w: 1280px;
+  --slide-h: 720px;
+}

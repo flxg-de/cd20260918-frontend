@@ -1,0 +1,85 @@
+/* ============================================================
+   OPITZ CONSULTING — Color tokens
+   Source of truth: PowerPoint theme "Opitz Farben"
+     dk1/dk2/accent6  #313338   accent1 #0066E8   accent2 #003066
+     accent3 #E82000  accent4 #C0C0C0  accent5 #606060
+   ============================================================ */
+
+:root {
+  /* ---- Brand core ------------------------------------------------ */
+  --oc-blue:        #0066E8;   /* primary — accent1, links, key fills   */
+  --oc-navy:        #003066;   /* deep blue — accent2, dark surfaces     */
+  --oc-red:         #E82000;   /* signal red — accent3, sparing emphasis */
+  --oc-ink:         #313338;   /* near-black — body text, dark UI        */
+  --oc-white:       #ffffff;
+
+  /* ---- Blue ramp (primary) -------------------------------------- */
+  --oc-blue-900:    #002a5c;
+  --oc-blue-800:    #003f93;
+  --oc-blue-700:    #0052ba;   /* hover / pressed for primary           */
+  --oc-blue-600:    #0066e8;   /* = --oc-blue                            */
+  --oc-blue-500:    #2f86f0;
+  --oc-blue-400:    #5c9df2;   /* light-blue used in stat bubbles        */
+  --oc-blue-300:    #93bef7;
+  --oc-blue-200:    #c5dcfb;
+  --oc-blue-100:    #e4eefc;   /* tinted surface / hover wash            */
+  --oc-blue-50:     #f3f8fe;
+
+  /* ---- Neutral ramp --------------------------------------------- */
+  --oc-gray-900:    #313338;   /* = --oc-ink                            */
+  --oc-gray-700:    #4a4c52;
+  --oc-gray-600:    #606060;   /* accent5 — secondary text              */
+  --oc-gray-500:    #8a8c90;
+  --oc-gray-400:    #c0c0c0;   /* accent4 — silver, dividers, disabled  */
+  --oc-gray-300:    #d8d9db;
+  --oc-gray-200:    #e7e8ea;   /* hairline borders                      */
+  --oc-gray-100:    #f2f3f5;   /* subtle page panel                     */
+  --oc-gray-50:     #f8f9fa;
+
+  /* ---- Semantic status (derived, harmonised) -------------------- */
+  --oc-success:     #1f8a4c;
+  --oc-warning:     #e8920a;
+  --oc-danger:      #e82000;   /* shares brand red                      */
+  --oc-info:        #0066e8;
+
+  /* ============================================================
+     SEMANTIC ALIASES — prefer these in components
+     ============================================================ */
+  --text-primary:   var(--oc-ink);
+  --text-secondary: var(--oc-gray-600);
+  --text-muted:     var(--oc-gray-500);
+  --text-inverse:   var(--oc-white);
+  --text-accent:    var(--oc-blue);
+  --text-link:      var(--oc-blue);
+
+  --surface-page:   var(--oc-white);
+  --surface-subtle: var(--oc-gray-100);
+  --surface-card:   var(--oc-white);
+  --surface-sunken: var(--oc-gray-50);
+  --surface-accent: var(--oc-blue);
+  --surface-accent-soft: var(--oc-blue-100);
+  --surface-dark:   var(--oc-navy);
+  --surface-ink:    var(--oc-ink);
+
+  --border-subtle:  var(--oc-gray-200);
+  --border-default: var(--oc-gray-300);
+  --border-strong:  var(--oc-gray-400);
+  --border-accent:  var(--oc-blue);
+
+  --accent:         var(--oc-blue);
+  --accent-hover:   var(--oc-blue-700);
+  --accent-strong:  var(--oc-navy);
+  --signal:         var(--oc-red);
+
+  --focus-ring:     0 0 0 3px color-mix(in srgb, var(--oc-blue) 35%, transparent);
+
+  /* ---- Categorical chart cycle (theme accent order) ------------- */
+  --chart-1: var(--oc-blue);      /* #0066E8 */
+  --chart-2: var(--oc-navy);      /* #003066 */
+  --chart-3: var(--oc-blue-400);  /* #5C9DF2 light blue */
+  --chart-4: var(--oc-gray-500);  /* #8A8C90 */
+  --chart-5: var(--oc-red);       /* #E82000 signal */
+  --chart-6: var(--oc-ink);       /* #313338 */
+  --chart-grid: var(--oc-gray-200);
+  --chart-axis: var(--oc-gray-600);
+}

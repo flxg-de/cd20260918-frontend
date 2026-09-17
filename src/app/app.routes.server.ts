@@ -25,31 +25,8 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    path: 'community-days/:communityDayId',
-    renderMode: RenderMode.Client,
-  },
-  {
-    // These routes load live data from the backend API via rxResource and
-    // require an authenticated OIDC session — angular-oauth2-oidc is
-    // browser-only, so none of these can be prerendered/SSR'd.
-    path: 'slots',
-    renderMode: RenderMode.Client,
-  },
-  {
-    path: 'slots/new',
-    renderMode: RenderMode.Client,
-  },
-  {
-    path: 'slots/:slotId/edit',
-    renderMode: RenderMode.Client,
-  },
-  {
     // Talks routes load live data via rxResource and require an
-    // authenticated OIDC session — same reasoning as the slots routes above.
-    path: 'talks/mine',
-    renderMode: RenderMode.Client,
-  },
-  {
+    // authenticated OIDC session — same reasoning as the routes above.
     path: 'talks/new',
     renderMode: RenderMode.Client,
   },
@@ -59,6 +36,28 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'talks',
+    renderMode: RenderMode.Client,
+  },
+  {
+    // The AppShell tab routes require an authenticated OIDC session —
+    // angular-oauth2-oidc is browser-only, so these render client-side.
+    path: 'submit',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'board',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'program',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'my-day',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'admin',
     renderMode: RenderMode.Client,
   },
   {

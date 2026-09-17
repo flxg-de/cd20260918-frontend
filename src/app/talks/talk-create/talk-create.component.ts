@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -6,6 +6,10 @@ import { form, FormField, maxLength, required } from '@angular/forms/signals';
 import { TalksService } from '../../../api/api/talks.service';
 import { CommunityDaysService } from '../../../api/api/community-days.service';
 import { CommunityDayPhase } from '../../../api/model/community-day-phase';
+import { CardComponent } from '../../shared/card/card.component';
+import { ChipComponent } from '../../shared/chip/chip.component';
+import { ButtonComponent } from '../../shared/button/button.component';
+import { talkStatusLabel } from '../talk-status.util';
 
 interface TalkCreateFormModel {
   title: string;
@@ -13,10 +17,26 @@ interface TalkCreateFormModel {
   durationMinutes: number;
 }
 
+interface DurationOption {
+  readonly minutes: number;
+  readonly label: string;
+}
+
+interface TimelineEntry {
+  readonly date: string;
+  readonly text: string;
+}
+
+const DURATION_OPTIONS: readonly DurationOption[] = [
+  { minutes: 15, label: '15 min' },
+  { minutes: 25, label: '25 min' },
+  { minutes: 45, label: '45 min' },
+];
+
 @Component({
   selector: 'app-talk-create',
   standalone: true,
-  imports: [FormField],
+  imports: [FormField, CardComponent, ChipComponent, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './talk-create.component.html',
 })
@@ -35,6 +55,32 @@ export class TalkCreateComponent {
   protected readonly canSubmitTalk = () =>
     this.currentDayResource.value()?.phase === CommunityDayPhase.SUBMISSION;
 
+  protected readonly durationOptions = DURATION_OPTIONS;
+
+  protected readonly timeline = computed<TimelineEntry[]>(() => {
+    const day = this.currentDayResource.value();
+    if (!day) {
+      return [];
+    }
+    const entries: TimelineEntry[] = [];
+    if (day.submissionDeadline) {
+      entries.push({ date: this.formatDate(day.submissionDeadline), text: 'Einsendeschluss für reguläre Einreichungen' });
+    }
+    if (day.lateSubmissionDeadline) {
+      entries.push({ date: this.formatDate(day.lateSubmissionDeadline), text: 'Letzter Termin für Nachreichungen' });
+    }
+    if (day.date) {
+      entries.push({ date: this.formatDate(day.date), text: 'Community Day' });
+    }
+    return entries;
+  });
+
+  protected readonly myTalksResource = rxResource({
+    stream: () => this.api.listTalks({ mine: true }),
+  });
+
+  protected readonly statusLabel = talkStatusLabel;
+
   protected readonly speakers = signal<string[]>(['']);
   protected readonly speakersError = signal<string | null>(null);
   protected readonly tags = signal<string[]>([]);
@@ -52,6 +98,18 @@ export class TalkCreateComponent {
     maxLength(path.description, 2000, { message: 'Beschreibung darf höchstens 2000 Zeichen lang sein' });
     required(path.durationMinutes, { message: 'Dauer ist erforderlich' });
   });
+
+  private formatDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    if (Number.isNaN(date.getTime())) {
+      return isoDate;
+    }
+    return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+  }
+
+  protected selectDuration(minutes: number): void {
+    this.talkForm.durationMinutes().value.set(minutes);
+  }
 
   protected addSpeaker(): void {
     this.speakers.update((current) => [...current, '']);

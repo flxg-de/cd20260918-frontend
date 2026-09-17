@@ -1,0 +1,14 @@
+/* ============================================================
+   OPITZ CONSULTING — Webfonts
+   Brand face: "Open Sans" family (Light 300, Regular 400,
+   Semibold 600, Bold 700, ExtraBold 800). The original
+   PowerPoint master uses "Open Sans", "Open Sans Semibold"
+   and "Open Sans ExtraBold". Monospace accents use Consolas.
+
+   NOTE: Delivered here via the Google Fonts CDN rather than
+   bundled binaries (the brand font IS Open Sans — same face,
+   just CDN-hosted). Swap in licensed local .woff2 files for
+   fully offline / production use.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,600&display=swap');

@@ -1,0 +1,126 @@
+<div class="mx-auto max-w-6xl px-6 py-10">
+  <p class="oc-eyebrow mb-2">#TALKS</p>
+  <h2 class="oc-display mb-6 text-2xl">Talks</h2>
+
+  @if (!talksResource.isLoading() && !talksResource.error()) {
+    <div class="mb-6 grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))">
+      @for (stat of stats(); track stat.label) {
+        <app-card class="px-5 py-4">
+          <div class="text-3xl font-extrabold tracking-tight text-oc-blue">{{ stat.value }}</div>
+          <div class="mt-2 text-xs font-bold uppercase tracking-wide text-oc-gray-600">{{ stat.label }}</div>
+        </app-card>
+      }
+    </div>
+  }
+
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-2">
+      <app-chip label="Alle" [active]="filter() === 'ALL'" (clicked)="setFilter('ALL')" />
+      <app-chip
+        label="Nicht eingeplant"
+        [active]="filter() === 'UNSCHEDULED'"
+        (clicked)="setFilter('UNSCHEDULED')"
+      />
+      <app-chip label="Eingeplant" [active]="filter() === 'SCHEDULED'" (clicked)="setFilter('SCHEDULED')" />
+      <app-chip label="Meine" [active]="filter() === 'MINE'" (clicked)="setFilter('MINE')" />
+      <app-chip label="Favoriten" [active]="filter() === 'FAVORITES'" (clicked)="setFilter('FAVORITES')" />
+      <app-chip label="Abgelehnt" [active]="filter() === 'REJECTED'" (clicked)="setFilter('REJECTED')" />
+    </div>
+    <app-button variant="outline" (click)="toggleSort()">{{ sortLabel() }}</app-button>
+  </div>
+
+  @if (talksResource.isLoading()) {
+    <p class="text-sm text-oc-gray-600">Lade Talks…</p>
+  } @else if (talksResource.error()) {
+    <p class="rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+      Talks konnten nicht geladen werden.
+    </p>
+  } @else if (filteredTalks(); as talks) {
+    @if (talks.length === 0) {
+      <p class="text-sm text-oc-gray-600">Keine Talks für diesen Filter.</p>
+    } @else {
+      <ul class="flex flex-col gap-3">
+        @for (talk of talks; track talk.id) {
+          <li>
+            <app-card class="px-5 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-lg font-bold tracking-tight text-oc-ink">{{ talk.title }}</span>
+                    <app-status-pill [label]="statusLabel(talk.status)" [badgeClass]="statusBadgeClasses(talk.status)" />
+                  </div>
+                  @if (talk.description) {
+                    <p class="mt-2 max-w-[80ch] text-sm text-oc-gray-600">{{ talk.description }}</p>
+                  }
+                  <p class="mt-2 text-xs font-semibold text-oc-gray-500">
+                    {{ talk.speakers.join(', ') }} · {{ talk.durationMinutes }} Min.
+                    @if (talk.tags?.length) {
+                      · {{ talk.tags?.join(', ') }}
+                    }
+                  </p>
+                  @if (talk.status === 'REJECTED' && talk.rejectionReason) {
+                    <p class="mt-1 text-sm text-oc-red">Grund: {{ talk.rejectionReason }}</p>
+                  }
+                </div>
+
+                <div class="flex shrink-0 items-center gap-2">
+                  <app-button variant="outline" [disabled]="votingId() === talk.id" (click)="toggleVote(talk)">
+                    {{ talk.votedByMe ? '✓' : '♡' }} {{ talk.votes ?? 0 }}
+                  </app-button>
+                  @if (isOrganizer()) {
+                    <app-button variant="outline" (click)="planTalk(talk)">Einplanen</app-button>
+                  }
+                </div>
+              </div>
+
+              @if (isOrganizer() && talk.status === 'SUBMITTED') {
+                <div class="mt-4 flex flex-wrap items-center gap-3 border-t border-oc-gray-100 pt-3">
+                  <input
+                    type="text"
+                    [value]="reasonFor(talk.id)"
+                    (input)="setReasonFor(talk.id, $any($event.target).value)"
+                    placeholder="Ablehnungsgrund (optional)"
+                    class="rounded-md border border-oc-gray-300 px-2 py-1 text-sm text-oc-ink"
+                  />
+                  <button
+                    type="button"
+                    (click)="rejectTalk(talk)"
+                    [disabled]="rejectingId() === talk.id"
+                    class="text-sm font-semibold text-oc-red transition-colors hover:text-oc-red disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Ablehnen
+                  </button>
+                </div>
+              }
+
+              @if (filter() === 'MINE' && isEditable(talk.status)) {
+                <div class="mt-4 flex items-center gap-3 border-t border-oc-gray-100 pt-3">
+                  <a
+                    [routerLink]="['/talks', talk.id, 'edit']"
+                    class="text-sm font-semibold text-oc-ink transition-colors hover:text-oc-blue"
+                  >
+                    Bearbeiten
+                  </a>
+                  <button
+                    type="button"
+                    (click)="withdrawTalk(talk)"
+                    [disabled]="withdrawingId() === talk.id"
+                    class="text-sm font-semibold text-oc-red transition-colors hover:text-oc-red disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Zurückziehen
+                  </button>
+                </div>
+              }
+            </app-card>
+          </li>
+        }
+      </ul>
+    }
+  }
+
+  @if (actionError(); as message) {
+    <p class="mt-6 rounded-md border border-oc-red bg-oc-red/5 px-4 py-3 text-sm text-oc-red">
+      {{ message }}
+    </p>
+  }
+</div>

@@ -1,0 +1,73 @@
+/* ============================================================
+   OPITZ CONSULTING — Typography tokens
+   Display = Open Sans ExtraBold (800), UPPERCASE for headers.
+   Body    = Open Sans 400/600. Mono accents = Consolas.
+   ============================================================ */
+
+:root {
+  /* ---- Families ------------------------------------------------- */
+  --font-display: 'Open Sans', 'Segoe UI', system-ui, sans-serif; /* use weight 800 */
+  --font-sans:    'Open Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'Consolas', 'SF Mono', ui-monospace, 'Liberation Mono', monospace;
+
+  /* ---- Weights -------------------------------------------------- */
+  --fw-light:     300; /* @kind font */
+  --fw-regular:   400; /* @kind font */
+  --fw-semibold:  600; /* @kind font */
+  --fw-bold:      700; /* @kind font */
+  --fw-extrabold: 800; /* @kind font */
+
+  /* ---- Type scale (UI / web) ------------------------------------ */
+  --fs-2xs:  0.6875rem;  /* 11px — footnotes, classification line   */
+  --fs-xs:   0.75rem;    /* 12px — captions, eyebrows               */
+  --fs-sm:   0.875rem;   /* 14px — secondary / dense UI             */
+  --fs-base: 1rem;       /* 16px — body                             */
+  --fs-md:   1.125rem;   /* 18px — lead body                        */
+  --fs-lg:   1.375rem;   /* 22px — card titles                      */
+  --fs-xl:   1.75rem;    /* 28px — section titles                   */
+  --fs-2xl:  2.25rem;    /* 36px — page titles                      */
+  --fs-3xl:  3rem;       /* 48px — hero                             */
+  --fs-4xl:  4rem;       /* 64px — display / big stats              */
+  --fs-5xl:  5.5rem;     /* 88px — slide hero numbers               */
+
+  /* ---- Line heights -------------------------------------------- */
+  --lh-tight:   1.05; /* @kind other */
+  --lh-snug:    1.2;  /* @kind other */
+  --lh-normal:  1.5;  /* @kind other */
+  --lh-relaxed: 1.65; /* @kind other */
+
+  /* ---- Tracking ------------------------------------------------- */
+  --ls-tight:   -0.02em; /* @kind other */
+  --ls-normal:  0;       /* @kind other */
+  --ls-wide:    0.04em;  /* @kind other */
+  --ls-wider:   0.12em;  /* @kind other */
+}
+
+/* ---- Optional helper classes (foundations / specimens) -------- */
+.oc-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.oc-eyebrow {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.oc-body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+}
+.oc-mono {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-regular);
+}

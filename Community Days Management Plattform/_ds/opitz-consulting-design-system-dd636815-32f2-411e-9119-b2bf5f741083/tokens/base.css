@@ -1,0 +1,45 @@
+/* ============================================================
+   OPITZ CONSULTING — Base element styling & utilities
+   Light, opt-in resets. Components rely on tokens above.
+   ============================================================ */
+
+.oc-root,
+.oc-scope {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Selection uses brand blue */
+::selection { background: color-mix(in srgb, var(--oc-blue) 22%, transparent); }
+
+/* The "#" eyebrow motif — section labels in the brand read "#HISTORY" */
+.oc-hash {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--accent);
+}
+.oc-hash::before { content: "#"; }
+
+/* Stat bubble — the recurring circular figure motif */
+.oc-bubble {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  aspect-ratio: 1;
+  color: var(--text-inverse);
+  text-align: center;
+  background: var(--oc-blue);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

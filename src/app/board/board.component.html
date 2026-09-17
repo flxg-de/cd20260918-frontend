@@ -1,0 +1,114 @@
+<p class="oc-eyebrow mb-2">#PLANUNG</p>
+
+@if (scheduleResource.isLoading() || talksResource.isLoading() || currentDayResource.isLoading()) {
+  <p>Lade Planungsboard...</p>
+} @else if (scheduleResource.error() || talksResource.error()) {
+  <p class="text-oc-red">Das Planungsboard konnte nicht geladen werden.</p>
+} @else {
+  @if (actionError(); as message) {
+    <p class="mb-4 text-sm font-semibold text-oc-red">{{ message }}</p>
+  }
+
+  @if (!isOrganizer()) {
+    <p class="mb-4 text-sm text-oc-gray-600">
+      Nur Organisator/innen können Talks im Board einplanen. Diese Ansicht ist schreibgeschützt.
+    </p>
+  }
+
+  <section class="grid items-start gap-5" style="grid-template-columns: 290px minmax(0, 1fr);">
+    <app-card class="sticky top-5 p-[18px]">
+      <div class="oc-eyebrow">#Nicht eingeplant</div>
+      <div class="mt-[7px] text-xs leading-relaxed text-oc-gray-600">
+        @if (isOrganizer()) {
+          Karte ziehen oder anklicken, dann ein freies Feld im Raster wählen.
+        } @else {
+          Noch nicht eingeplante Talks.
+        }
+      </div>
+
+      <div
+        class="mt-4 grid min-h-[120px] gap-[10px]"
+        (dragover)="isOrganizer() && $event.preventDefault()"
+        (drop)="isOrganizer() && dropOnPool()"
+      >
+        @for (talk of pool(); track talk.id) {
+          <div
+            class="rounded-md border p-3 transition-colors duration-200"
+            [class.cursor-pointer]="isOrganizer()"
+            [class.border-oc-blue]="selected() === talk.id"
+            [class.border-oc-gray-300]="selected() !== talk.id"
+            [attr.draggable]="isOrganizer() ? true : null"
+            (dragstart)="isOrganizer() && startDrag(talk.id)"
+            (click)="isOrganizer() && selectPoolTalk(talk)"
+          >
+            <div class="text-sm font-bold leading-snug">{{ talk.title }}</div>
+            <div class="mt-1.5 text-xs font-semibold text-oc-gray-600">{{ talkMeta(talk) }}</div>
+          </div>
+        } @empty {
+          <div class="rounded-md border border-dashed border-oc-gray-300 p-[18px] text-center text-sm text-oc-gray-500">
+            Alles eingeplant.
+          </div>
+        }
+      </div>
+    </app-card>
+
+    <app-card class="overflow-x-auto p-[18px]">
+      <div class="mb-4 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div class="oc-eyebrow">#Swimlanes</div>
+          <div class="mt-[3px] text-xl font-extrabold">Planungsboard</div>
+        </div>
+        <div class="text-sm font-bold text-oc-gray-600">{{ boardStatus() }}</div>
+      </div>
+
+      <div class="grid gap-2" style="min-width: 900px;">
+        <div class="grid gap-2" [style.grid-template-columns]="'160px repeat(' + slots().length + ', 1fr)'">
+          <div></div>
+          @for (slot of slots(); track slot.id) {
+            <div class="rounded-md bg-oc-navy px-3 py-[9px] text-oc-white">
+              <div class="text-sm font-extrabold">{{ slot.name }}</div>
+              @if (slot.room) {
+                <div class="mt-[3px] text-xs opacity-85">{{ slot.room }}</div>
+              }
+            </div>
+          }
+        </div>
+
+        @for (row of rows(); track row.id) {
+          @if (row.locked) {
+            <div class="rounded-md bg-oc-navy px-4 py-3 text-oc-white">
+              <span class="text-sm font-extrabold">{{ row.label }}</span>
+            </div>
+          } @else {
+            <div class="grid gap-2" [style.grid-template-columns]="'160px repeat(' + slots().length + ', 1fr)'">
+              <div class="flex items-center text-xs font-extrabold text-oc-gray-700">{{ row.label }}</div>
+              @for (cell of row.cells; track cell.slotId) {
+                <div
+                  class="min-h-[64px] rounded-md border p-3 transition-colors duration-200"
+                  [class.cursor-pointer]="isOrganizer()"
+                  [class.border-oc-blue]="isOrganizer() && selected() && !cell.talk"
+                  [class.border-dashed]="!cell.talk"
+                  [class.border-oc-gray-300]="!cell.talk"
+                  [class.bg-oc-blue-50]="isOrganizer() && selected() && !cell.talk"
+                  [class.border-oc-navy]="!!cell.talk"
+                  (dragover)="isOrganizer() && $event.preventDefault()"
+                  (drop)="isOrganizer() && dropOnCell(cell.slotId, row.id)"
+                  (click)="isOrganizer() && clickCell(cell.slotId, row.id, cell.talk)"
+                >
+                  @if (cell.talk; as talk) {
+                    <div [attr.draggable]="isOrganizer() ? true : null" (dragstart)="isOrganizer() && startDrag(talk.id)">
+                      <div class="text-sm font-bold leading-snug">{{ talk.title }}</div>
+                      <div class="mt-1.5 text-xs font-semibold text-oc-gray-600">{{ talkMeta(talk) }}</div>
+                    </div>
+                  } @else {
+                    <div class="text-xs font-semibold text-oc-gray-400">frei</div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+    </app-card>
+  </section>
+}

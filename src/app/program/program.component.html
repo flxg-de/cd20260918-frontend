@@ -1,0 +1,82 @@
+<p class="oc-eyebrow mb-2">#PROGRAMM</p>
+
+@if (currentDayResource.isLoading()) {
+  <p>Lade Programm...</p>
+} @else if (currentDayResource.error()) {
+  <p class="text-oc-red">Das Programm konnte nicht geladen werden.</p>
+} @else if (!programAvailable()) {
+  <app-card class="p-6">
+    <p class="text-sm text-oc-gray-600">Das Programm ist noch nicht verfügbar.</p>
+  </app-card>
+} @else if (scheduleResource.isLoading()) {
+  <p>Lade Programm...</p>
+} @else if (scheduleResource.error()) {
+  <p class="text-oc-red">Das Programm konnte nicht geladen werden.</p>
+} @else {
+  @if (favoriteError(); as message) {
+    <p class="mb-4 text-sm font-semibold text-oc-red">{{ message }}</p>
+  }
+
+  <div class="mb-5 flex flex-wrap gap-2">
+    @for (location of locationOptions(); track location) {
+      <app-chip
+        [label]="location"
+        [active]="locationFilter() === location"
+        (clicked)="selectLocation(location)"
+      />
+    }
+  </div>
+
+  <div class="grid gap-3.5">
+    @for (row of rows(); track row.id) {
+      @if (row.locked) {
+        <div class="rounded-md bg-oc-navy px-5 py-4 text-oc-white">
+          <div class="flex flex-wrap items-baseline gap-3.5">
+            <span class="text-xl font-extrabold text-oc-blue-300">{{ row.label }}</span>
+            <span class="text-lg font-extrabold">{{ row.blockTitle }}</span>
+          </div>
+        </div>
+      } @else {
+        <app-card class="p-[18px_20px]">
+          <div class="mb-3 flex flex-wrap items-baseline gap-3.5">
+            <span class="text-xl font-extrabold text-oc-blue">{{ row.label }}</span>
+            <span class="text-xs font-bold uppercase tracking-wide opacity-75">
+              {{ row.sessions.length }} {{ row.sessions.length === 1 ? 'Session' : 'Sessions' }}
+            </span>
+          </div>
+
+          @if (row.sessions.length === 0) {
+            <div class="rounded-md border border-dashed border-oc-gray-300 p-4 text-sm text-oc-gray-500">
+              Noch nichts eingeplant.
+            </div>
+          } @else {
+            <div class="grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+              @for (session of row.sessions; track session.talkId) {
+                <div
+                  class="rounded-md border p-3.5"
+                  [class.border-oc-blue]="session.favorited"
+                  [class.bg-oc-blue-50]="session.favorited"
+                  [class.border-oc-gray-200]="!session.favorited"
+                >
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-extrabold uppercase tracking-wide text-oc-blue">{{ session.slotName }}</span>
+                    <app-status-pill [label]="session.modeLabel" variant="info" />
+                  </div>
+                  <div class="mt-2 text-sm font-bold leading-snug">{{ session.title }}</div>
+                  <div class="mt-1.5 text-xs font-semibold text-oc-gray-600">{{ session.meta }}</div>
+                  <app-button
+                    class="mt-2.5 inline-block"
+                    variant="outline"
+                    (click)="toggleFavorite(session.talkId, session.favorited)"
+                  >
+                    {{ session.favorited ? '✓ Gemerkt' : 'Merken' }}
+                  </app-button>
+                </div>
+              }
+            </div>
+          }
+        </app-card>
+      }
+    }
+  </div>
+}

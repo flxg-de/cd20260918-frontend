@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="OPITZ Company Deck" description="Branded 16:9 company presentation starter — title, agenda, value, figures, closing" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+  body { margin: 0; background: #3a3d42; }
+</style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px;font-family:'Open Sans',system-ui,sans-serif;">
+
+  <!-- ============ 01 · TITLE ============ -->
+  <section style="position:relative;width:1280px;height:720px;background:#fff;overflow:hidden;flex:none;">
+    <div style="position:absolute;top:0;right:0;width:56%;height:100%;background:url('./assets/backgrounds/bg-binary-dna.png') center/cover no-repeat;clip-path:polygon(24% 0,100% 0,100% 100%,6% 100%);"></div>
+    <div style="position:absolute;left:72px;top:56px;z-index:3;">
+      <x-import component-from-global-scope="OPITZCONSULTINGDesignSystem_dd6368.Logo" size="44" hint-size="190px,46px"></x-import>
+    </div>
+    <div style="position:absolute;left:72px;top:150px;bottom:84px;width:46%;display:flex;flex-direction:column;justify-content:center;gap:20px;z-index:2;">
+      <div style="font-family:'Open Sans';font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:#0066E8;font-size:16px;">Über uns</div>
+      <h1 style="margin:0;font-family:'Open Sans';font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:1.04;font-size:52px;max-width:500px;color:#313338;">Nächster Schritt der Digitalisierung</h1>
+      <p style="margin:0;font-weight:300;font-size:24px;line-height:1.35;color:#606060;max-width:460px;">Modern. Integriert. Automatisiert. Sicher. — IT-Lösungen, die im Jetzt und #zukunftswirksam sind.</p>
+      <div style="display:flex;gap:48px;margin-top:14px;">
+        <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#0066E8;font-weight:700;">Referent</div><div style="font-size:15px;color:#606060;margin-top:3px;">Name, Rolle</div></div>
+        <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#0066E8;font-weight:700;">Ort &amp; Datum</div><div style="font-size:15px;color:#606060;margin-top:3px;">Gummersbach · 2026</div></div>
+      </div>
+    </div>
+    <div style="position:absolute;left:72px;right:72px;bottom:24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#606060;border-top:1px solid #e7e8ea;padding-top:9px;">
+      <div style="display:flex;gap:9px;"><span>© OPITZ CONSULTING 2026</span><span style="color:#0066E8;">/</span><span>ÜBER OPITZ CONSULTING</span><span style="color:#0066E8;">/</span><span style="font-weight:600;color:#313338;">Öffentlich</span></div>
+      <span style="font-family:'Open Sans';font-weight:800;color:#0066E8;font-size:14px;">01</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 · AGENDA ============ -->
+  <section style="position:relative;width:1280px;height:720px;background:#fff;overflow:hidden;flex:none;">
+    <div style="position:absolute;left:72px;top:56px;right:72px;display:flex;justify-content:space-between;align-items:flex-start;">
+      <x-import component-from-global-scope="OPITZCONSULTINGDesignSystem_dd6368.Logo" size="40" hint-size="180px,42px"></x-import>
+      <span style="font-family:'Open Sans';font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#0066E8;font-size:17px;">#Über OPITZ Consulting</span>
+    </div>
+    <h1 style="position:absolute;left:72px;top:150px;margin:0;font-family:'Open Sans';font-weight:800;text-transform:uppercase;line-height:1.02;font-size:46px;color:#313338;">Inhalt</h1>
+    <div style="position:absolute;left:72px;right:72px;top:252px;display:grid;grid-template-columns:1fr 1fr;gap:26px 64px;">
+      <div style="display:flex;align-items:baseline;gap:20px;padding-bottom:20px;border-bottom:1px solid #e7e8ea;"><span style="font-family:'Open Sans';font-weight:800;font-size:34px;color:#0066E8;min-width:56px;">01</span><span><div style="font-size:20px;font-weight:600;color:#313338;">Digitale Service Manufaktur</div><div style="font-size:14px;color:#606060;margin-top:2px;">Wer wir sind</div></span></div>
+      <div style="display:flex;align-items:baseline;gap:20px;padding-bottom:20px;border-bottom:1px solid #e7e8ea;"><span style="font-family:'Open Sans';font-weight:800;font-size:34px;color:#0066E8;min-width:56px;">02</span><span><div style="font-size:20px;font-weight:600;color:#313338;">Geschichte</div><div style="font-size:14px;color:#606060;margin-top:2px;">Inhabergeführt seit 1990</div></span></div>
+      <div style="display:flex;align-items:baseline;gap:20px;padding-bottom:20px;border-bottom:1px solid #e7e8ea;"><span style="font-family:'Open Sans';font-weight:800;font-size:34px;color:#0066E8;min-width:56px;">03</span><span><div style="font-size:20px;font-weight:600;color:#313338;">Zahlenwerk</div><div style="font-size:14px;color:#606060;margin-top:2px;">Der Beweis in Zahlen</div></span></div>
+      <div style="display:flex;align-items:baseline;gap:20px;padding-bottom:20px;border-bottom:1px solid #e7e8ea;"><span style="font-family:'Open Sans';font-weight:800;font-size:34px;color:#0066E8;min-width:56px;">04</span><span><div style="font-size:20px;font-weight:600;color:#313338;">Mehrwert</div><div style="font-size:14px;color:#606060;margin-top:2px;">Modern · Integriert · Automatisiert · Sicher</div></span></div>
+    </div>
+    <div style="position:absolute;left:72px;right:72px;bottom:24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#606060;border-top:1px solid #e7e8ea;padding-top:9px;">
+      <div style="display:flex;gap:9px;"><span>© OPITZ CONSULTING 2026</span><span style="color:#0066E8;">/</span><span>ÜBER OPITZ CONSULTING</span><span style="color:#0066E8;">/</span><span style="font-weight:600;color:#313338;">Öffentlich</span></div>
+      <span style="font-family:'Open Sans';font-weight:800;color:#0066E8;font-size:14px;">02</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 · FIGURES ============ -->
+  <section style="position:relative;width:1280px;height:720px;background:#fff;overflow:hidden;flex:none;">
+    <div style="position:absolute;left:72px;top:56px;right:72px;display:flex;justify-content:space-between;align-items:flex-start;">
+      <x-import component-from-global-scope="OPITZCONSULTINGDesignSystem_dd6368.Logo" size="40" hint-size="180px,42px"></x-import>
+      <span style="font-family:'Open Sans';font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#0066E8;font-size:17px;">#Zahlenwerk</span>
+    </div>
+    <h1 style="position:absolute;left:72px;top:142px;margin:0;font-family:'Open Sans';font-weight:800;text-transform:uppercase;font-size:42px;color:#313338;">Der Beweis in Zahlen</h1>
+    <div style="position:absolute;left:72px;top:255px;width:520px;height:360px;">
+      <div style="position:absolute;left:40px;top:20px;width:184px;height:184px;border-radius:999px;background:#003066;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:'Open Sans';font-weight:800;font-size:54px;line-height:1;">545</span><span style="font-weight:600;font-size:14px;opacity:.92;margin-top:4px;">Mitarbeitende</span></div>
+      <div style="position:absolute;left:250px;top:0;width:138px;height:138px;border-radius:999px;background:#0066E8;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:'Open Sans';font-weight:800;font-size:38px;line-height:1;">91%</span><span style="font-weight:600;font-size:12px;opacity:.92;margin-top:4px;">Kundenzufriedenheit</span></div>
+      <div style="position:absolute;left:248px;top:160px;width:120px;height:120px;border-radius:999px;background:#5c9df2;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:'Open Sans';font-weight:800;font-size:32px;line-height:1;">30+</span><span style="font-weight:600;font-size:12px;opacity:.92;margin-top:4px;">Jahre</span></div>
+      <div style="position:absolute;left:90px;top:228px;width:104px;height:104px;border-radius:999px;background:#8a8c90;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:'Open Sans';font-weight:800;font-size:26px;line-height:1;">8+1</span><span style="font-weight:600;font-size:11px;opacity:.92;margin-top:4px;">Standorte</span></div>
+    </div>
+    <div style="position:absolute;right:72px;top:255px;width:520px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div style="border:1px solid #e7e8ea;border-radius:10px;padding:22px;"><div style="font-family:'Open Sans';font-weight:800;font-size:40px;color:#003066;line-height:1;">60,4 Mio. €</div><div style="font-size:14px;color:#606060;margin-top:8px;">Umsatz (2024)</div></div>
+      <div style="border:1px solid #e7e8ea;border-radius:10px;padding:22px;"><div style="font-family:'Open Sans';font-weight:800;font-size:40px;color:#0066E8;line-height:1;">&gt;130</div><div style="font-size:14px;color:#606060;margin-top:8px;">aktive Managed-Services-Kunden</div></div>
+      <div style="border:1px solid #e7e8ea;border-radius:10px;padding:22px;"><div style="font-family:'Open Sans';font-weight:800;font-size:40px;color:#0066E8;line-height:1;">&gt;5000</div><div style="font-size:14px;color:#606060;margin-top:8px;">Datenbanken im Support</div></div>
+      <div style="border:1px solid #e7e8ea;border-radius:10px;padding:22px;"><div style="font-family:'Open Sans';font-weight:800;font-size:40px;color:#E82000;line-height:1;">&gt;99,5%</div><div style="font-size:14px;color:#606060;margin-top:8px;">SLA-Erfüllung</div></div>
+    </div>
+    <div style="position:absolute;left:72px;right:72px;bottom:24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#606060;border-top:1px solid #e7e8ea;padding-top:9px;">
+      <div style="display:flex;gap:9px;"><span>© OPITZ CONSULTING 2026</span><span style="color:#0066E8;">/</span><span>ÜBER OPITZ CONSULTING</span><span style="color:#0066E8;">/</span><span style="font-weight:600;color:#313338;">Öffentlich</span></div>
+      <span style="font-family:'Open Sans';font-weight:800;color:#0066E8;font-size:14px;">03</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 · CLOSING ============ -->
+  <section style="position:relative;width:1280px;height:720px;background:#003066;color:#fff;overflow:hidden;flex:none;">
+    <div style="position:absolute;inset:0;background:url('./assets/backgrounds/bg-city-network.jpeg') center/cover no-repeat;opacity:.22;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,48,102,.6),rgba(0,48,102,.92));"></div>
+    <div style="position:absolute;right:72px;top:56px;z-index:2;">
+      <x-import component-from-global-scope="OPITZCONSULTINGDesignSystem_dd6368.Logo" tone="white" size="40" hint-size="180px,42px"></x-import>
+    </div>
+    <div style="position:absolute;left:72px;top:160px;z-index:2;">
+      <div style="font-family:'Open Sans';font-weight:800;font-size:84px;line-height:1;"><span style="color:#0066E8;">#</span>undweiter</div>
+      <div style="font-family:'Open Sans';font-weight:300;font-size:38px;line-height:1.1;margin-top:8px;">Zusammen erfolgreich</div>
+    </div>
+    <div style="position:absolute;left:72px;bottom:96px;z-index:2;display:flex;gap:64px;">
+      <div><div style="font-weight:700;font-size:18px;">Dr. Sebastian Schafftwas</div><div style="font-size:14px;color:rgba(255,255,255,.7);margin:2px 0 8px;">Senior Solution Architect</div><div style="font-size:14px;color:#93bef7;">s.schafftwas@opitz-consulting.de</div></div>
+      <div><div style="font-weight:700;font-size:18px;">Patricia Performa</div><div style="font-size:14px;color:rgba(255,255,255,.7);margin:2px 0 8px;">Projektmanagerin</div><div style="font-size:14px;color:#93bef7;">p.performa@opitz-consulting.de</div></div>
+    </div>
+    <div style="position:absolute;left:72px;right:72px;bottom:24px;z-index:2;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.7);border-top:1px solid rgba(255,255,255,.18);padding-top:9px;">
+      <div style="display:flex;gap:9px;"><span>© OPITZ CONSULTING 2026</span><span style="color:#0066E8;">/</span><span>ÜBER OPITZ CONSULTING</span><span style="color:#0066E8;">/</span><span style="font-weight:600;color:#fff;">Öffentlich</span></div>
+      <span style="font-family:'Open Sans';font-weight:800;color:#fff;font-size:14px;">04</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+</body>
+</html>

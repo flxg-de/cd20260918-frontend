@@ -27,31 +27,42 @@
       <ul class="flex flex-col gap-3">
         @for (day of communityDays; track day.id) {
           <li>
-            <a
-              [routerLink]="['/community-days', day.id]"
-              class="oc-shadow-sm block rounded-md border px-5 py-4 transition-colors hover:bg-oc-gray-50"
-              [class.border-oc-blue]="isCurrent(day.id)"
-              [class.border-oc-gray-200]="!isCurrent(day.id)"
-            >
-              <div class="flex items-center justify-between gap-4">
-                <div>
-                  <p class="font-semibold text-oc-ink">
-                    {{ day.name }}
-                    @if (isCurrent(day.id)) {
+            @if (isCurrent(day.id)) {
+              <a
+                routerLink="/admin"
+                class="oc-shadow-sm block rounded-md border border-oc-blue px-5 py-4 transition-colors hover:bg-oc-gray-50"
+              >
+                <div class="flex items-center justify-between gap-4">
+                  <div>
+                    <p class="font-semibold text-oc-ink">
+                      {{ day.name }}
                       <span
                         class="ml-2 rounded-full bg-oc-blue px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-oc-white"
                         >Aktuell</span
                       >
-                    }
-                  </p>
-                  <p class="text-sm text-oc-gray-600">{{ day.date }}</p>
+                    </p>
+                    <p class="text-sm text-oc-gray-600">{{ day.date }}</p>
+                  </div>
+                  <span
+                    class="rounded-md bg-oc-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-oc-ink"
+                    >{{ day.phase }}</span
+                  >
                 </div>
-                <span
-                  class="rounded-md bg-oc-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-oc-ink"
-                  >{{ day.phase }}</span
-                >
+              </a>
+            } @else {
+              <div class="oc-shadow-sm block rounded-md border border-oc-gray-200 px-5 py-4">
+                <div class="flex items-center justify-between gap-4">
+                  <div>
+                    <p class="font-semibold text-oc-ink">{{ day.name }}</p>
+                    <p class="text-sm text-oc-gray-600">{{ day.date }}</p>
+                  </div>
+                  <span
+                    class="rounded-md bg-oc-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-oc-ink"
+                    >{{ day.phase }}</span
+                  >
+                </div>
               </div>
-            </a>
+            }
           </li>
         }
       </ul>

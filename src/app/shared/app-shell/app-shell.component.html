@@ -1,0 +1,39 @@
+<header class="border-b border-oc-gray-200 bg-oc-white">
+  <div class="flex items-center justify-between px-7 py-4">
+    <div class="flex items-center gap-4">
+      <span class="oc-display text-lg">OC Community Days</span>
+      @if (currentDayResource.value(); as day) {
+        <span class="text-sm text-oc-gray-600">{{ day.name }}</span>
+      }
+    </div>
+    @if (phaseLabel(); as phase) {
+      <span class="rounded-full bg-oc-blue-50 px-[15px] py-[7px] text-[13px] font-semibold text-oc-blue-700">
+        {{ phase }}
+      </span>
+    }
+  </div>
+
+  <nav class="flex gap-6 px-7">
+    @for (tab of navTabs; track tab.path) {
+      <a
+        [routerLink]="tab.path"
+        routerLinkActive="border-oc-blue text-oc-ink"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="border-b-[3px] border-transparent px-1 py-3 text-sm font-semibold text-oc-gray-600"
+      >
+        {{ tab.label }}
+      </a>
+    }
+    @if (isOrganizer()) {
+      <a
+        routerLink="/admin"
+        routerLinkActive="border-oc-blue text-oc-ink"
+        class="border-b-[3px] border-transparent px-1 py-3 text-sm font-semibold text-oc-gray-600"
+      >
+        Admin
+      </a>
+    }
+  </nav>
+</header>
+
+<router-outlet />
